@@ -1,2 +1,0 @@
-obj\Debug\net6.0\Protos/Gameplayerlogout.cs \
-obj\Debug\net6.0\Protos/GameplayerlogoutGrpc.cs: Protos/gameplayerlogout.proto
