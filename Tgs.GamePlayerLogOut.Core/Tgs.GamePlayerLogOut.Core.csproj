@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Tgs.GameProviders.Client" Version="0.0.49" />
+		<PackageReference Include="TGS.ServiceUtility" Version="0.2.0" />
+		<PackageReference Include="Tgs.MessageQueue" Version="2.1.1" />
+		<PackageReference Include="Tgs.MessageQueue.RabbitMQ" Version="2.1.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Tgs.GamePlayerLogOut.Common\Tgs.GamePlayerLogOut.Common.csproj" />
+	</ItemGroup>
+
+</Project>

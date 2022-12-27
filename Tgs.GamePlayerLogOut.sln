@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GamePlayerLogOut", "Tgs.GamePlayerLogOut\Tgs.GamePlayerLogOut.csproj", "{3F55DFD0-D2CE-4F8E-B683-57EF47B0F430}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{A7C7F350-7A9D-4F40-A5AF-669C21B99FD9}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		nuget.config = nuget.config
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GamePlayerLogOut.Core", "Tgs.GamePlayerLogOut.Core\Tgs.GamePlayerLogOut.Core.csproj", "{1B65F7F6-CA8B-42A1-8606-C5A32BDDBAE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GamePlayerLogOut.Common", "Tgs.GamePlayerLogOut.Common\Tgs.GamePlayerLogOut.Common.csproj", "{25706FE7-B94D-450E-B0A1-5600F7432634}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GamePlayerLogOut.Core.UnitTest", "Tgs.GamePlayerLogOut.Core.UnitTest\Tgs.GamePlayerLogOut.Core.UnitTest.csproj", "{5EB74C5B-F7C8-438D-80AE-E28BB9B89692}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GamePlayerLogOut.Client", "Tgs.GamePlayerLogOut.Client\Tgs.GamePlayerLogOut.Client.csproj", "{C9027269-3227-43D4-9980-E1BA14A0A2E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F55DFD0-D2CE-4F8E-B683-57EF47B0F430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F55DFD0-D2CE-4F8E-B683-57EF47B0F430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F55DFD0-D2CE-4F8E-B683-57EF47B0F430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F55DFD0-D2CE-4F8E-B683-57EF47B0F430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B65F7F6-CA8B-42A1-8606-C5A32BDDBAE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B65F7F6-CA8B-42A1-8606-C5A32BDDBAE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B65F7F6-CA8B-42A1-8606-C5A32BDDBAE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B65F7F6-CA8B-42A1-8606-C5A32BDDBAE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25706FE7-B94D-450E-B0A1-5600F7432634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25706FE7-B94D-450E-B0A1-5600F7432634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25706FE7-B94D-450E-B0A1-5600F7432634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25706FE7-B94D-450E-B0A1-5600F7432634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EB74C5B-F7C8-438D-80AE-E28BB9B89692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EB74C5B-F7C8-438D-80AE-E28BB9B89692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EB74C5B-F7C8-438D-80AE-E28BB9B89692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EB74C5B-F7C8-438D-80AE-E28BB9B89692}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9027269-3227-43D4-9980-E1BA14A0A2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9027269-3227-43D4-9980-E1BA14A0A2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9027269-3227-43D4-9980-E1BA14A0A2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9027269-3227-43D4-9980-E1BA14A0A2E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E99DB36C-A899-4E80-B8DA-93FB8E3937B6}
+	EndGlobalSection
+EndGlobal
