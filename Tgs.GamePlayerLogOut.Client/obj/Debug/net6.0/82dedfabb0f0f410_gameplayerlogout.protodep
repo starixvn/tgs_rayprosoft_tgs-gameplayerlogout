@@ -1,0 +1,2 @@
+obj\Debug\net6.0/Gameplayerlogout.cs \
+obj\Debug\net6.0/GameplayerlogoutGrpc.cs: ../Tgs.GamePlayerLogOut/Protos/gameplayerlogout.proto

@@ -1,0 +1,84 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Client\\Tgs.GamePlayerLogOut.Client.csproj": {}
+  },
+  "projects": {
+    "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Client\\Tgs.GamePlayerLogOut.Client.csproj": {
+      "version": "0.0.1",
+      "restore": {
+        "projectUniqueName": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Client\\Tgs.GamePlayerLogOut.Client.csproj",
+        "projectName": "Tgs.GamePlayerLogOut.Client",
+        "projectPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Client\\Tgs.GamePlayerLogOut.Client.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Client\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "D:\\00.Git\\tgs-gameplayerlogout\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://baget.rpgp.cc/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Grpc.AspNetCore.Server.Reflection": {
+              "target": "Package",
+              "version": "[2.50.0, )"
+            },
+            "Grpc.Net.ClientFactory": {
+              "target": "Package",
+              "version": "[2.50.0, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.51.0, )"
+            },
+            "PhoenixToolkits.Protobuf.ExtendTypes": {
+              "target": "Package",
+              "version": "[0.0.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

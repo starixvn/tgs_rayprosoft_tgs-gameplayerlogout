@@ -1,0 +1,276 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut\\Tgs.GamePlayerLogOut.csproj": {}
+  },
+  "projects": {
+    "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Common\\Tgs.GamePlayerLogOut.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Common\\Tgs.GamePlayerLogOut.Common.csproj",
+        "projectName": "Tgs.GamePlayerLogOut.Common",
+        "projectPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Common\\Tgs.GamePlayerLogOut.Common.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "D:\\00.Git\\tgs-gameplayerlogout\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://baget.rpgp.cc/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Grpc.AspNetCore": {
+              "target": "Package",
+              "version": "[2.50.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Core\\Tgs.GamePlayerLogOut.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Core\\Tgs.GamePlayerLogOut.Core.csproj",
+        "projectName": "Tgs.GamePlayerLogOut.Core",
+        "projectPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Core\\Tgs.GamePlayerLogOut.Core.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "D:\\00.Git\\tgs-gameplayerlogout\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://baget.rpgp.cc/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Common\\Tgs.GamePlayerLogOut.Common.csproj": {
+                "projectPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Common\\Tgs.GamePlayerLogOut.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "TGS.ServiceUtility": {
+              "target": "Package",
+              "version": "[0.2.0, )"
+            },
+            "Tgs.GameProviders.Client": {
+              "target": "Package",
+              "version": "[0.0.49, )"
+            },
+            "Tgs.MessageQueue": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Tgs.MessageQueue.RabbitMQ": {
+              "target": "Package",
+              "version": "[2.1.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut\\Tgs.GamePlayerLogOut.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut\\Tgs.GamePlayerLogOut.csproj",
+        "projectName": "Tgs.GamePlayerLogOut",
+        "projectPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut\\Tgs.GamePlayerLogOut.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "D:\\00.Git\\tgs-gameplayerlogout\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://baget.rpgp.cc/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Common\\Tgs.GamePlayerLogOut.Common.csproj": {
+                "projectPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Common\\Tgs.GamePlayerLogOut.Common.csproj"
+              },
+              "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Core\\Tgs.GamePlayerLogOut.Core.csproj": {
+                "projectPath": "D:\\00.Git\\tgs-gameplayerlogout\\Tgs.GamePlayerLogOut.Core\\Tgs.GamePlayerLogOut.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "FluentdForward.OpenTelemetry.MessagePack": {
+              "target": "Package",
+              "version": "[0.2.0, )"
+            },
+            "Grpc.AspNetCore": {
+              "target": "Package",
+              "version": "[2.50.0, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.17.0, )"
+            },
+            "OpenTelemetry.Contrib.Instrumentation.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[1.0.0-beta2, )"
+            },
+            "OpenTelemetry.Exporter.OpenTelemetryProtocol": {
+              "target": "Package",
+              "version": "[1.3.2, )"
+            },
+            "OpenTelemetry.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[1.0.0-rc9, )"
+            },
+            "OpenTelemetry.Instrumentation.AspNetCore": {
+              "target": "Package",
+              "version": "[1.0.0-rc9, )"
+            },
+            "OpenTelemetry.Instrumentation.GrpcCore": {
+              "target": "Package",
+              "version": "[1.0.0-beta.5, )"
+            },
+            "OpenTelemetry.Instrumentation.GrpcNetClient": {
+              "target": "Package",
+              "version": "[1.0.0-rc9.3, )"
+            },
+            "OpenTelemetry.Instrumentation.Http": {
+              "target": "Package",
+              "version": "[1.0.0-rc9, )"
+            },
+            "ProfileViewer.OpenTelemetry.Exporter": {
+              "target": "Package",
+              "version": "[0.2.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
+            "Tgs.Interceptors": {
+              "target": "Package",
+              "version": "[0.2.1, )"
+            },
+            "Tgs.MessageQueue": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "Tgs.MessageQueue.RabbitMQ": {
+              "target": "Package",
+              "version": "[2.1.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

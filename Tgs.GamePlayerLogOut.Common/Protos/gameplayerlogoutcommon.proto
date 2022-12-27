@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option csharp_namespace = "Tgs.GamePlayerLogOut.Common.Protos";
+
+package gameplayerlogoutcommon;
+
+// The greeting service definition.
+
+// The request message containing the user's name.
+message  PlayerLogOutRequest {
+    string player_code = 1;
+}
+
+// The response message containing the greetings.
