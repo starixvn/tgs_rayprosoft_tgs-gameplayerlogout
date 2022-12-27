@@ -6,7 +6,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddGameFundTransferClient(
+    public static IServiceCollection AddGamePlayerLogOutClient(
         this IServiceCollection services,
         Action<GamePlayerLogOutClientOptions, IServiceProvider> configure)
         => services

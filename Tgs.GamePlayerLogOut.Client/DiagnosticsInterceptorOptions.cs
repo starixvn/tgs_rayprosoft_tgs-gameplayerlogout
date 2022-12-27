@@ -5,5 +5,5 @@ namespace Tgs.GamePlayerLogOut.Client;
 public class DiagnosticsInterceptorOptions
 {
     public ActivitySource InterceptorActivitySource { get; set; } =
-        new ActivitySource($"Tgs.GameTransfer.Client.DiagnosticsInterceptor");
+        new ActivitySource($"Tgs.GamePlayerLogOut.Client.DiagnosticsInterceptor");
 }
