@@ -1,4 +1,4 @@
-using System.Net.Mime;
+﻿using System.Net.Mime;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -614,6 +614,19 @@ builder.Services
                         "amq.fanout",
                         "gp.kickplayer.sabatf",
                         new Dictionary<string, object>());
+
+                    _ = channel.QueueDeclare(
+                        "gp.kickplayer.tftf",
+                        true,
+                        false,
+                        false,
+                        new Dictionary<string, object>());
+
+                    channel.QueueBind(
+                        "gp.kickplayer.tftf",
+                        "amq.fanout",
+                        "gp.kickplayer.tftf",
+                        new Dictionary<string, object>());
                 };
             })
             .AddHandler<KYMessageHandler>("gp.kickplayer.ky", true)
@@ -656,7 +669,8 @@ builder.Services
             .AddHandler<JDBTransferMessageHandler>("gp.kickplayer.jdbtf", true)
             .AddHandler<SBOTransferMessageHandler>("gp.kickplayer.sbotf", true)
             .AddHandler<HabaneroTransferMessageHandler>("gp.kickplayer.habatf", true)
-            .AddHandler<SabaTransferMessageHandler>("gp.kickplayer.sabatf", true);
+            .AddHandler<SabaTransferMessageHandler>("gp.kickplayer.sabatf", true)
+            .AddHandler<TFGamingTransferMessageHandler>("gp.kickplayer.tftf", true);
     })
     .ClearAllExchanges()
     .AddRabbitGlobPatternExchange("gp.kickplayer", "amq.fanout")
