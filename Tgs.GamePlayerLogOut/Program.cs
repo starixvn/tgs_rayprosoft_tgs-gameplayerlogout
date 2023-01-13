@@ -627,6 +627,19 @@ builder.Services
                         "amq.fanout",
                         "gp.kickplayer.tftf",
                         new Dictionary<string, object>());
+
+                    _ = channel.QueueDeclare(
+                        "gp.kickplayer.dgtf",
+                        true,
+                        false,
+                        false,
+                        new Dictionary<string, object>());
+
+                    channel.QueueBind(
+                        "gp.kickplayer.dgtf",
+                        "amq.fanout",
+                        "gp.kickplayer.dgtf",
+                        new Dictionary<string, object>());
                 };
             })
             .AddHandler<KYMessageHandler>("gp.kickplayer.ky", true)
@@ -670,7 +683,8 @@ builder.Services
             .AddHandler<SBOTransferMessageHandler>("gp.kickplayer.sbotf", true)
             .AddHandler<HabaneroTransferMessageHandler>("gp.kickplayer.habatf", true)
             .AddHandler<SabaTransferMessageHandler>("gp.kickplayer.sabatf", true)
-            .AddHandler<TFGamingTransferMessageHandler>("gp.kickplayer.tftf", true);
+            .AddHandler<TFGamingTransferMessageHandler>("gp.kickplayer.tftf", true)
+            .AddHandler<DreamGamingTransferMessageHandler>("gp.kickplayer.dgtf", true);
     })
     .ClearAllExchanges()
     .AddRabbitGlobPatternExchange("gp.kickplayer", "amq.fanout")
