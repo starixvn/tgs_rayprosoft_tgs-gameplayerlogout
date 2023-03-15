@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Logging.Abstractions;
+﻿using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Tgs.GamePlayerLogOut.Core.ApplicationServices;
 using Tgs.GameProviders.Client;

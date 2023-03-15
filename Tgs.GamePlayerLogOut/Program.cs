@@ -23,9 +23,9 @@ builder.Logging
         options.ParseStateValues = true;
         _ = options.AddFluentdForwardExporter(fluentOptions =>
         {
-            var nodeIp = builder.Configuration.GetValue<string>("NODE_IP");
+            var nodeIp = builder.Configuration.GetValue<string>("NODE_IP")!;
             fluentOptions.Host = nodeIp;
-            fluentOptions.Tag = builder.Configuration.GetValue<string>("OTEL_SERVICE_NAME");
+            fluentOptions.Tag = builder.Configuration.GetValue<string>("OTEL_SERVICE_NAME")!;
             fluentOptions.UseMessagePack();
         });
     });
@@ -67,7 +67,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddGamePlayerLogOutCore((options, sp) =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
-    options.BaseUrl = configuration.GetValue<Uri>("GamePlayerLogOut:GameProvidersClientBaseUrl");
+    options.BaseUrl = configuration.GetValue<Uri>("GamePlayerLogOut:GameProvidersClientBaseUrl")!;
 });
 
 builder.Services
@@ -640,6 +640,19 @@ builder.Services
                         "amq.fanout",
                         "gp.kickplayer.dgtf",
                         new Dictionary<string, object>());
+
+                    _ = channel.QueueDeclare(
+                        "gp.kickplayer.fachai",
+                        true,
+                        false,
+                        false,
+                        new Dictionary<string, object>());
+
+                    channel.QueueBind(
+                        "gp.kickplayer.fachai",
+                        "amq.fanout",
+                        "gp.kickplayer.fachai",
+                        new Dictionary<string, object>());
                 };
             })
             .AddHandler<KYMessageHandler>("gp.kickplayer.ky", true)
@@ -684,7 +697,8 @@ builder.Services
             .AddHandler<HabaneroTransferMessageHandler>("gp.kickplayer.habatf", true)
             .AddHandler<SabaTransferMessageHandler>("gp.kickplayer.sabatf", true)
             .AddHandler<TFGamingTransferMessageHandler>("gp.kickplayer.tftf", true)
-            .AddHandler<DreamGamingTransferMessageHandler>("gp.kickplayer.dgtf", true);
+            .AddHandler<DreamGamingTransferMessageHandler>("gp.kickplayer.dgtf", true)
+            .AddHandler<FachaiMessageHandler>("gp.kickplayer.fachai", true);
     })
     .ClearAllExchanges()
     .AddRabbitGlobPatternExchange("gp.kickplayer", "amq.fanout")
