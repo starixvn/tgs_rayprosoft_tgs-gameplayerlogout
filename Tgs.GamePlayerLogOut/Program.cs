@@ -691,6 +691,19 @@ builder.Services
                         "amq.fanout",
                         "gp.kickplayer.yeebet",
                         new Dictionary<string, object>());
+
+                    _ = channel.QueueDeclare(
+                        "gp.kickplayer.pinnacle",
+                        true,
+                        false,
+                        false,
+                        new Dictionary<string, object>());
+
+                    channel.QueueBind(
+                        "gp.kickplayer.pinnacle",
+                        "amq.fanout",
+                        "gp.kickplayer.pinnacle",
+                        new Dictionary<string, object>());
                 };
             })
             .AddHandler<KYMessageHandler>("gp.kickplayer.ky", true)
@@ -739,7 +752,8 @@ builder.Services
             .AddHandler<FachaiMessageHandler>("gp.kickplayer.fachai", true)
             .AddHandler<EndorphinaMessageHandler>("gp.kickplayer.endor", true)
             .AddHandler<OBetMessageHandler>("gp.kickplayer.obet", true)
-            .AddHandler<YeeBetMessageHandler>("gp.kickplayer.yeebet", true);
+            .AddHandler<YeeBetMessageHandler>("gp.kickplayer.yeebet", true)
+            .AddHandler<PinnacleMessageHandler>("gp.kickplayer.pinnacle", true);
     })
     .ClearAllExchanges()
     .AddRabbitGlobPatternExchange("gp.kickplayer", "amq.fanout")
