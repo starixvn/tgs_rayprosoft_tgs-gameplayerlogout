@@ -6,13 +6,13 @@ using Tgs.ServiceUtility;
 
 namespace Tgs.GamePlayerLogOut.MessageHandlers;
 
-internal class WGHorseMessageHandler : IMessageHandler
+internal class WGViaGamingMessageHandler : IMessageHandler
 {
-    private readonly ILogger<WGHorseMessageHandler> _logger;
+    private readonly ILogger<WGViaGamingMessageHandler> _logger;
     private readonly ICommandService<LogOutCommand> _service;
 
-    public WGHorseMessageHandler(
-        ILogger<WGHorseMessageHandler> logger,
+    public WGViaGamingMessageHandler(
+        ILogger<WGViaGamingMessageHandler> logger,
         ICommandService<LogOutCommand> service)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -27,7 +27,7 @@ internal class WGHorseMessageHandler : IMessageHandler
               throw new NullReferenceException("The request data resolves to a null value");
 
         var command = new LogOutCommand(
-            GameProviderType.WGHorse,
+            GameProviderType.WGViaGaming,
             request.PlayerCode);
 
         _logger.LogInformation("LogOn:{logOn} Information Command:{command}", DateTime.Now.ToString("o"), command);
