@@ -5,10 +5,9 @@ using Tgs.GameProviders.Client;
 
 namespace Tgs.GamePlayerLogOut.Core.UnitTest;
 
-[TestClass]
 public class LogOutCommandServiceUnitTest
 {
-    [TestMethod]
+    [Fact]
     public async Task Normal_Process()
     {
         var command = new LogOutCommand(

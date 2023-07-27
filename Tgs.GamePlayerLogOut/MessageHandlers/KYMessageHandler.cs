@@ -27,7 +27,7 @@ internal class KYMessageHandler : IMessageHandler
               throw new NullReferenceException("The request data resolves to a null value");
 
         var command = new LogOutCommand(
-            GameProviderType.KY,
+            GameProviderType.Kaiyuan,
             request.PlayerCode);
 
         _logger.LogInformation("LogOn:{logOn} Information Command:{command}", DateTime.Now.ToString("o"), command);

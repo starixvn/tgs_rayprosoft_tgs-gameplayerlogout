@@ -5,10 +5,9 @@ using Tgs.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.Core.UnitTest;
 
-[TestClass]
 public class LogOutGameProviderMessageCommandServiceUnitTest
 {
-    [TestMethod]
+    [Fact]
     public async Task Normal_Process()
     {
         var command = new LogOutGameProviderMessageCommand(
