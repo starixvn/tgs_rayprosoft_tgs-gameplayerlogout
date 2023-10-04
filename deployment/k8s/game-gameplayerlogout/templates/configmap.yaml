@@ -26,7 +26,7 @@ data:
           }
         }
       },
-      "GamePlayerLogOut": {
+      "GamePlayerLogOutSettings": {
         "GameProvidersClientBaseUrl": "http://game-gameproviders"
       }
     }
