@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Tgs.GamePlayerLogOut.Core.ApplicationServices;
-using Tgs.MessageQueue;
+using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.Core.UnitTest;
 
@@ -21,12 +21,12 @@ public class LogOutGameProviderMessageCommandServiceUnitTest
             fakeLog,
             fakeMessageSender);
 
-        await service.ExecuteAsync(command).ConfigureAwait(false);
+        await service.ExecuteAsync(command);
 
         await fakeMessageSender
             .Received(1)
             .PublishAsync(
-               Arg.Is($"gp.kickplayer.{command.GameProviderCode.Replace("_", ".")}".ToLower()),
+               Arg.Is($"gp.player.logout.{command.GameProviderCode.Replace("_", ".").ToLower()}"),
                Arg.Any<ReadOnlyMemory<byte>>(),
                Arg.Any<CancellationToken>());
     }

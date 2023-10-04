@@ -17,16 +17,16 @@ public class PlayerController : ControllerBase
     /// <remarks>
     /// <b>Example</b><br />
     ///
-    ///     Delete /4ucmqplxb029
+    ///     Delete /player/4ucmqplxb029/logout
     /// </remarks>
-    [HttpDelete("{playerCode}", Name = "LogOut")]
+    [HttpDelete("{playerCode}/logout", Name = "LogOut")]
     public ValueTask LogOutAsync(
         [FromServices] ICommandService<LogOutMessageCommand> service,
         string playerCode)
         => service.ExecuteAsync(
-            new LogOutMessageCommand(
-                playerCode),
-            HttpContext.RequestAborted);
+            command: new LogOutMessageCommand(
+                PlayerCode: playerCode),
+            cancellationToken: HttpContext.RequestAborted);
 
     /// <summary>
     /// Logs the out by game provider asynchronous.
@@ -38,16 +38,16 @@ public class PlayerController : ControllerBase
     /// <remarks>
     /// <b>Example</b><br />
     ///
-    ///     Delete /4ucmqplxb029/AWC_SG
+    ///     Delete /player/4ucmqplxb029/KY/logout
     /// </remarks>
-    [HttpDelete("{playerCode}/{gameProviderCode}", Name = "LogOutByGameProvider")]
+    [HttpDelete("{playerCode}/{gameProviderCode}/logout", Name = "LogOutByGameProvider")]
     public ValueTask LogOutByGameProviderAsync(
         [FromServices] ICommandService<LogOutGameProviderMessageCommand> service,
         string playerCode,
         string gameProviderCode)
         => service.ExecuteAsync(
-            new LogOutGameProviderMessageCommand(
-                playerCode,
-                gameProviderCode),
-            HttpContext.RequestAborted);
+            command: new LogOutGameProviderMessageCommand(
+                PlayerCode: playerCode,
+                GameProviderCode: gameProviderCode),
+            cancellationToken: HttpContext.RequestAborted);
 }

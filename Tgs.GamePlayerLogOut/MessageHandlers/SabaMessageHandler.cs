@@ -1,8 +1,8 @@
 ﻿using Tgs.GamePlayerLogOut.Common.Protos;
 using Tgs.GamePlayerLogOut.Core.ApplicationServices;
 using Tgs.GameProviders.Domains;
-using Tgs.MessageQueue;
 using Tgs.ServiceUtility;
+using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.MessageHandlers;
 
@@ -34,7 +34,7 @@ public class SabaMessageHandler : IMessageHandler
 
         return _service
             .ExecuteAsync(
-                command: command,
-                cancellationToken: cancellationToken);
+            command: command,
+            cancellationToken: cancellationToken);
     }
 }

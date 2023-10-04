@@ -7,10 +7,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Tgs.GameProviders.Client" Version="0.0.66" />
+		<PackageReference Include="PhoenixToolkits.MessageQueue" Version="1.0.3" />
+		<PackageReference Include="PhoenixToolkits.MessageQueue.Direct" Version="1.0.3" />
+		<PackageReference Include="PhoenixToolkits.MessageQueue.Nats" Version="1.0.3" />
+		<PackageReference Include="Tgs.GameProviders.Client" Version="0.0.68" />
 		<PackageReference Include="TGS.ServiceUtility" Version="0.2.0" />
-		<PackageReference Include="Tgs.MessageQueue" Version="2.3.0" />
-		<PackageReference Include="Tgs.MessageQueue.RabbitMQ" Version="2.3.2" />
 	</ItemGroup>
 
 	<ItemGroup>

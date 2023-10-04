@@ -1,8 +1,8 @@
 ﻿using Google.Protobuf;
 using Microsoft.Extensions.Logging;
 using Tgs.GamePlayerLogOut.Common.Protos;
-using Tgs.MessageQueue;
 using Tgs.ServiceUtility;
+using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.Core.ApplicationServices;
 
@@ -23,12 +23,14 @@ internal class LogOutMessageCommandService : ICommandService<LogOutMessageComman
     {
         _logger.LogInformation("LogOn:{logOn} Information Command:{command}", DateTime.Now.ToString("o"), command);
 
+        var request = new PlayerLogOutRequest
+        {
+            PlayerCode = command.PlayerCode,
+        };
+
         return _sender.PublishAsync(
-             subject: "gp.kickplayer",
-             data: new PlayerLogOutRequest
-             {
-                 PlayerCode = command.PlayerCode,
-             }.ToByteArray(),
+             subject: "gp.player.logout",
+             data: request.ToByteArray(),
              cancellationToken: cancellationToken);
     }
 }

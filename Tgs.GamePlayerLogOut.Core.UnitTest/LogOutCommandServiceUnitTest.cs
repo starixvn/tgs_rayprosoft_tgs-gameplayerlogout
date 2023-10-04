@@ -21,7 +21,7 @@ public class LogOutCommandServiceUnitTest
             fakeLog,
             fakeGameProvidersClient);
 
-        await service.ExecuteAsync(command).ConfigureAwait(false);
+        await service.ExecuteAsync(command);
 
         await fakeGameProvidersClient
             .Received(1)

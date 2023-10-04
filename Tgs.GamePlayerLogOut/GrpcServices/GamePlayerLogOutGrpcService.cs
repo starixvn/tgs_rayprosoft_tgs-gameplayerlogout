@@ -22,12 +22,12 @@ public class GamePlayerLogOutGrpcService : GamePlayerLogOutService.GamePlayerLog
     public override async Task<BaseReply> LogOut(LogOutRequest request, ServerCallContext context)
     {
         var command = new LogOutMessageCommand(
-                request.PlayerCode);
-        await _logOutService
-             .ExecuteAsync(
-                 command,
-                 context.CancellationToken)
-             .ConfigureAwait(false);
+            PlayerCode: request.PlayerCode);
+
+        await _logOutService.ExecuteAsync(
+            command: command,
+             cancellationToken: context.CancellationToken)
+            .ConfigureAwait(false);
 
         return new BaseReply
         {
@@ -38,13 +38,13 @@ public class GamePlayerLogOutGrpcService : GamePlayerLogOutService.GamePlayerLog
     public override async Task<BaseReply> LogOutByGameProvider(LogOutByGameProviderRequest request, ServerCallContext context)
     {
         var command = new LogOutGameProviderMessageCommand(
-                request.PlayerCode,
-                request.GameProviderCode);
-        await _logOutGameProviderService
-             .ExecuteAsync(
-                 command,
-                 context.CancellationToken)
-             .ConfigureAwait(false);
+                PlayerCode: request.PlayerCode,
+                GameProviderCode: request.GameProviderCode);
+
+        await _logOutGameProviderService.ExecuteAsync(
+            command: command,
+            cancellationToken: context.CancellationToken)
+            .ConfigureAwait(false);
 
         return new BaseReply
         {

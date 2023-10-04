@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>0.0.3</Version>
+		<Version>0.0.4</Version>
 		<Authors>Raypro</Authors>
 		<Description>TGS GamePlayerLogOut Client</Description>
 		<PackageProjectUrl>https://gitlab.com/rayprosoft/tgs-gameplayerlogout</PackageProjectUrl>
@@ -17,13 +17,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.55.0" />
-		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.55.0" />
-		<PackageReference Include="Grpc.Tools" Version="2.56.2">
+		<PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.57.0" />
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.57.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.58.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="PhoenixToolkits.NuGet.BuildTools" Version="0.0.2" />
+		<PackageReference Include="PhoenixToolkits.NuGet.BuildTools" Version="0.0.3">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="PhoenixToolkits.Protobuf.ExtendTypes" Version="0.0.6" />
 	</ItemGroup>
 
