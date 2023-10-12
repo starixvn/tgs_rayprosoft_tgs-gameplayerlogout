@@ -178,7 +178,9 @@ builder.Services
         .AddHandler<PinnacleMessageHandler>("gp.player.logout")
         .AddHandler<PinnacleMessageHandler>(GameProviderType.Pinnacle.SubjectToString(), GameProviderType.Pinnacle.SubjectToString())
         .AddHandler<WicketCricketMessageHandler>("gp.player.logout")
-        .AddHandler<WicketCricketMessageHandler>(GameProviderType.WicketCricket.SubjectToString(), GameProviderType.WicketCricket.SubjectToString());
+        .AddHandler<WicketCricketMessageHandler>(GameProviderType.WicketCricket.SubjectToString(), GameProviderType.WicketCricket.SubjectToString())
+        .AddHandler<GKXGamingMessageHandler>("gp.player.logout")
+        .AddHandler<GKXGamingMessageHandler>(GameProviderType.GKXGaming.SubjectToString(), GameProviderType.GKXGaming.SubjectToString());
     })
     .ClearAllExchanges()
     .AddNatsGlobPatternExchange("*");
