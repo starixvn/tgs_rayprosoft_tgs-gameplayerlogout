@@ -180,7 +180,9 @@ builder.Services
         .AddHandler<WicketCricketMessageHandler>("gp.player.logout")
         .AddHandler<WicketCricketMessageHandler>(GameProviderType.WicketCricket.SubjectToString(), GameProviderType.WicketCricket.SubjectToString())
         .AddHandler<GKXGamingMessageHandler>("gp.player.logout")
-        .AddHandler<GKXGamingMessageHandler>(GameProviderType.GKXGaming.SubjectToString(), GameProviderType.GKXGaming.SubjectToString());
+        .AddHandler<GKXGamingMessageHandler>(GameProviderType.GKXGaming.SubjectToString(), GameProviderType.GKXGaming.SubjectToString())
+        .AddHandler<V8PokerMessageHandler>("gp.player.logout")
+        .AddHandler<V8PokerMessageHandler>(GameProviderType.V8Poker.SubjectToString(), GameProviderType.V8Poker.SubjectToString());
     })
     .ClearAllExchanges()
     .AddNatsGlobPatternExchange("*");

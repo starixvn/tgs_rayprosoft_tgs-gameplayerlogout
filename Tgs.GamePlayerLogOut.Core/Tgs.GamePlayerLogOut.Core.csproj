@@ -10,7 +10,7 @@
 		<PackageReference Include="PhoenixToolkits.MessageQueue" Version="1.0.3" />
 		<PackageReference Include="PhoenixToolkits.MessageQueue.Direct" Version="1.0.3" />
 		<PackageReference Include="PhoenixToolkits.MessageQueue.Nats" Version="1.0.3" />
-		<PackageReference Include="Tgs.GameProviders.Client" Version="0.0.69" />
+		<PackageReference Include="Tgs.GameProviders.Client" Version="0.0.70" />
 		<PackageReference Include="TGS.ServiceUtility" Version="0.2.0" />
 	</ItemGroup>
 
