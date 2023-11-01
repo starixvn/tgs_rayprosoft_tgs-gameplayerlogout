@@ -13,6 +13,7 @@ data:
         }
       },
       "GamePlayerLogOutSettings": {
+        "GameCommandClientBaseUrl": "http://game-gamecommand/",
         "GameProvidersClientBaseUrl": "http://game-gameproviders/"
       }
     }

@@ -52,11 +52,17 @@ builder.Services.AddSwaggerGen(c =>
     }
 });
 
-builder.Services.AddGamePlayerLogOutCore((options, sp) =>
-{
-    var configuration = sp.GetRequiredService<IConfiguration>();
-    options.BaseUrl = configuration.GetValue<Uri>("GamePlayerLogOutSettings:GameProvidersClientBaseUrl")!;
-});
+builder.Services.AddGamePlayerLogOutCore(
+    (options, sp) =>
+    {
+        var configuration = sp.GetRequiredService<IConfiguration>();
+        options.BaseUrl = configuration.GetValue<Uri>("GamePlayerLogOutSettings:GameCommandClientBaseUrl")!;
+    },
+    (options, sp) =>
+    {
+        var configuration = sp.GetRequiredService<IConfiguration>();
+        options.BaseUrl = configuration.GetValue<Uri>("GamePlayerLogOutSettings:GameProvidersClientBaseUrl")!;
+    } );
 
 builder.Services
     .AddMessageQueue()
