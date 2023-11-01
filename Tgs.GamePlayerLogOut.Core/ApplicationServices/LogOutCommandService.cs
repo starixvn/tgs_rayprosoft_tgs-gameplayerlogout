@@ -52,7 +52,7 @@ internal class LogOutCommandService : ICommandService<LogOutCommand>
         }
         catch (NullReferenceException ex)
         {
-            _logger.LogError(ex, "LogOn:{logOn} Information Command:{command} Message:{message}", DateTime.Now.ToString("o"), command, ex.Message);
+            _logger.LogInformation(ex, "LogOn:{logOn} Information Command:{command} Message:{message}", DateTime.Now.ToString("o"), command, ex.Message);
         }
         catch (Exception ex)
         {
