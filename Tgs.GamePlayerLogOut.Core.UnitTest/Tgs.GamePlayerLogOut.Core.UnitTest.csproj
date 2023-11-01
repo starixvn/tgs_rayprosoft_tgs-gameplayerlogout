@@ -27,4 +27,12 @@
 		<ProjectReference Include="..\Tgs.GamePlayerLogOut.Core\Tgs.GamePlayerLogOut.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <EditorConfigFiles Remove="D:\00.Git\tgs-gameplayerlogout\Tgs.GamePlayerLogOut.Core.UnitTest\.editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="D:\00.Git\tgs-gameplayerlogout\Tgs.GamePlayerLogOut.Core.UnitTest\.editorconfig" />
+	</ItemGroup>
+
 </Project>
