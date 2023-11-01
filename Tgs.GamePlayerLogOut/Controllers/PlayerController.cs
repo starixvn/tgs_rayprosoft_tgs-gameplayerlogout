@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Tgs.GamePlayerLogOut.Core.ApplicationServices;
-using Tgs.ServiceUtility;
+﻿using Google.Protobuf;
+using Microsoft.AspNetCore.Mvc;
+using Tgs.GamePlayerLogOut.Common.Protos;
+using Tgs.GamePlayerLogOut.Core.Extensions;
+using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.Controllers;
 
@@ -11,7 +13,7 @@ public class PlayerController : ControllerBase
     /// <summary>
     /// Logs the out asynchronous.
     /// </summary>
-    /// <param name="service">The service.</param>
+    /// <param name="messageSender">The message sender.</param>
     /// <param name="playerCode">The player code.</param>
     /// <returns></returns>
     /// <remarks>
@@ -21,17 +23,24 @@ public class PlayerController : ControllerBase
     /// </remarks>
     [HttpDelete("{playerCode}/logout", Name = "LogOut")]
     public ValueTask LogOutAsync(
-        [FromServices] ICommandService<LogOutMessageCommand> service,
+        [FromServices] IMessageSender messageSender,
         string playerCode)
-        => service.ExecuteAsync(
-            command: new LogOutMessageCommand(
-                PlayerCode: playerCode),
+    {
+        var request = new PlayerLogOutRequest
+        {
+            PlayerCode = playerCode,
+        };
+
+        return messageSender.PublishAsync(
+            subject: "gp.player.logout",
+            data: request.ToByteArray(),
             cancellationToken: HttpContext.RequestAborted);
+    }
 
     /// <summary>
     /// Logs the out by game provider asynchronous.
     /// </summary>
-    /// <param name="service">The service.</param>
+    /// <param name="messageSender">The message sender.</param>
     /// <param name="playerCode">The player code.</param>
     /// <param name="gameProviderCode">The game provider code.</param>
     /// <returns></returns>
@@ -42,12 +51,18 @@ public class PlayerController : ControllerBase
     /// </remarks>
     [HttpDelete("{playerCode}/{gameProviderCode}/logout", Name = "LogOutByGameProvider")]
     public ValueTask LogOutByGameProviderAsync(
-        [FromServices] ICommandService<LogOutGameProviderMessageCommand> service,
+        [FromServices] IMessageSender messageSender,
         string playerCode,
         string gameProviderCode)
-        => service.ExecuteAsync(
-            command: new LogOutGameProviderMessageCommand(
-                PlayerCode: playerCode,
-                GameProviderCode: gameProviderCode),
+    {
+        var request = new PlayerLogOutRequest
+        {
+            PlayerCode = playerCode,
+        };
+
+        return messageSender.PublishAsync(
+            subject: gameProviderCode.SubjectToString(),
+            data: request.ToByteArray(),
             cancellationToken: HttpContext.RequestAborted);
+    }
 }

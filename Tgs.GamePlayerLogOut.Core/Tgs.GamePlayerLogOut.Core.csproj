@@ -7,15 +7,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="PhoenixToolkits.MessageQueue" Version="1.0.3" />
-		<PackageReference Include="PhoenixToolkits.MessageQueue.Direct" Version="1.0.3" />
-		<PackageReference Include="PhoenixToolkits.MessageQueue.Nats" Version="1.0.3" />
-		<PackageReference Include="Tgs.GameProviders.Client" Version="0.0.70" />
+		<PackageReference Include="Tgs.GameProviders.Client" Version="0.0.71" />
 		<PackageReference Include="TGS.ServiceUtility" Version="0.2.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Tgs.GamePlayerLogOut.Common\Tgs.GamePlayerLogOut.Common.csproj" />
 	</ItemGroup>
 
 </Project>

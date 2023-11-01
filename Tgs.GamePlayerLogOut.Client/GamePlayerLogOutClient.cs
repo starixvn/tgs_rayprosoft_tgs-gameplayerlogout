@@ -1,39 +1,45 @@
-﻿using Tgs.GamePlayerLogOut.Protos;
+﻿using Google.Protobuf;
+using Tgs.GamePlayerLogOut.Common.Protos;
+using Tgs.GamePlayerLogOut.Core.Extensions;
+using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.Client;
 
 internal class GamePlayerLogOutClient : IGamePlayerLogOutClient
 {
-    private readonly GamePlayerLogOutService.GamePlayerLogOutServiceClient _client;
+    private readonly IMessageSender _messageSender;
 
-    public GamePlayerLogOutClient(GamePlayerLogOutService.GamePlayerLogOutServiceClient client)
+    public GamePlayerLogOutClient(IMessageSender messageSender)
     {
-        _client = client ?? throw new ArgumentNullException(nameof(client));
+        _messageSender = messageSender ?? throw new ArgumentNullException(nameof(messageSender));
     }
 
-    public async ValueTask<bool> LogOutAsync(
-        string playerCode,
-        CancellationToken cancellationToken = default)
-        => (await _client
-        .LogOutAsync(
-            request: new LogOutRequest
-            {
-                PlayerCode = playerCode
-            },
-            cancellationToken: cancellationToken)
-        .ConfigureAwait(false)).Success;
+    public ValueTask LogOutAsync(string playerCode, CancellationToken cancellationToken = default)
+    {
+        var request = new PlayerLogOutRequest
+        {
+            PlayerCode = playerCode,
+        };
 
-    public async ValueTask<bool> LogOutByGameProviderAsync(
+        return _messageSender.PublishAsync(
+            subject: "gp.player.logout",
+            data: request.ToByteArray(),
+            cancellationToken: cancellationToken);
+    }
+
+    public ValueTask LogOutAsync(
         string playerCode,
         string gameProviderCode,
         CancellationToken cancellationToken = default)
-        => (await _client
-        .LogOutByGameProviderAsync(
-            request: new LogOutByGameProviderRequest
-            {
-                PlayerCode = playerCode,
-                GameProviderCode = gameProviderCode
-            },
-            cancellationToken: cancellationToken)
-        .ConfigureAwait(false)).Success;
+    {
+        var request = new PlayerLogOutRequest
+        {
+            PlayerCode = playerCode,
+        };
+
+        return _messageSender.PublishAsync(
+            subject: gameProviderCode.SubjectToString(),
+            data: request.ToByteArray(),
+            cancellationToken: cancellationToken);
+    }
 }

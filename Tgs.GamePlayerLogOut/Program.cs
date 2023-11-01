@@ -5,9 +5,7 @@ using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Tgs.GamePlayerLogOut;
 using Tgs.GamePlayerLogOut.Core.Extensions;
-using Tgs.GamePlayerLogOut.GrpcServices;
 using Tgs.GamePlayerLogOut.MessageHandlers;
 using Tgs.GameProviders.Domains;
 
@@ -31,17 +29,6 @@ builder.Logging
         });
     });
 
-// Add services to the container.
-builder.Services.AddSingleton<DiagnosticsInterceptorOptions>();
-builder.Services.AddSingleton<LoggingInterceptor>();
-builder.Services.AddGrpc(options =>
-{
-    options.Interceptors.Add<LoggingInterceptor>();
-    //If true, detailed exception messages are returned to clients when an exception is thrown in a service method.
-    //The default is false.
-    //Setting EnableDetailedErrors to true can leak sensitive information.
-    options.EnableDetailedErrors = true;
-});
 // Add services to the container.
 builder.Services
     .AddRouting(options => options.LowercaseUrls = true)
@@ -233,9 +220,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapHealthChecks("/healthz");
-
-// Configure the HTTP request pipeline.
-app.MapGrpcService<GamePlayerLogOutGrpcService>();
-app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 app.Run();
