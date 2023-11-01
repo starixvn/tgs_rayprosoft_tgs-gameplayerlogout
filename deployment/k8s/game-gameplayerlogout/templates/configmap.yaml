@@ -12,22 +12,8 @@ data:
           "Default": "Warning"
         }
       },
-      "Kestrel": {
-        "EndpointDefaults": {
-          "Protocols": "Http2"
-        },
-        "Endpoints": {
-          "HealthCheck": {
-            "Url": "http://*:{{ .Values.service.port }}",
-            "Protocols": "Http1"
-          },
-          "Grpc": {
-            "Url": "http://*:{{ .Values.servicegrpc.port }}"
-          }
-        }
-      },
       "GamePlayerLogOutSettings": {
-        "GameProvidersClientBaseUrl": "http://game-gameproviders"
+        "GameProvidersClientBaseUrl": "http://game-gameproviders/"
       }
     }
   otel-collector-config.yaml: |

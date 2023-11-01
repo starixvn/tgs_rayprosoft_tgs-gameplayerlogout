@@ -53,22 +53,19 @@ spec:
               readOnly: true
               subPath: appsettings.json
           ports:
-            - name: grpc
-              containerPort:  {{ .Values.servicegrpc.port }}
-              protocol: TCP
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 80
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /healthz
-              port:  {{ .Values.service.port }}
-            initialDelaySeconds: 5
-            periodSeconds: 5
+              port: http
+            failureThreshold: 5
+            periodSeconds: 60
           startupProbe:
             httpGet:
               path: /healthz
-              port: {{ .Values.service.port }}
+              port: http
             failureThreshold: 30
             periodSeconds: 2
           resources:
