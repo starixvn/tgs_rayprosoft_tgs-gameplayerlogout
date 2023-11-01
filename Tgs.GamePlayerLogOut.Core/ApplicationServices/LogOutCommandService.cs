@@ -44,11 +44,20 @@ internal class LogOutCommandService : ICommandService<LogOutCommand>
                .ConfigureAwait(false)
                ?? throw new NullReferenceException($"This game provider({command.GameProviderCode}) is not configured on this platform({player.BrandCode}).");
 
-            await _client.KickPlayerAsync(
-                gameProviderCode: command.GameProviderCode,
-                playerCode: command.PlayerCode,
+            var gameProvider = await _gameCommandClient.GameProviderGetAsync(
+                gameProviderId: gameProviderId,
                 cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                .ConfigureAwait(false)
+                ?? throw new NullReferenceException($"This game provider({command.GameProviderCode}) does not exist.");
+
+            if (gameProvider.AllowKickPlayer)
+            {
+                await _client.KickPlayerAsync(
+                    gameProviderCode: command.GameProviderCode,
+                    playerCode: command.PlayerCode,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
         }
         catch (NullReferenceException ex)
         {
@@ -56,7 +65,6 @@ internal class LogOutCommandService : ICommandService<LogOutCommand>
         }
         catch (Exception ex)
         {
-
             _logger.LogError(ex, "LogOn:{logOn} Information Command:{command} Message:{message}", DateTime.Now.ToString("o"), command, ex.Message);
         }
     }
