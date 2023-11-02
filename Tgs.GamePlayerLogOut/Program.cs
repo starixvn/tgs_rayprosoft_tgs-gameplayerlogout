@@ -142,6 +142,8 @@ builder.Services
         .AddHandler<AwcVenusMessageHandler>(GameProviderType.AWC_VENUS.SubjectToString(), GameProviderType.AWC_VENUS.SubjectToString())
         .AddHandler<AwcYlMessageHandler>("gp.player.logout")
         .AddHandler<AwcYlMessageHandler>(GameProviderType.AWC_YL.SubjectToString(), GameProviderType.AWC_YL.SubjectToString())
+        .AddHandler<AwcYesbingoMessageHandler>("gp.player.logout")
+        .AddHandler<AwcYesbingoMessageHandler>(GameProviderType.AWC_YESBINGO.SubjectToString(), GameProviderType.AWC_YESBINGO.SubjectToString())
         .AddHandler<JiliTransferMessageHandler>("gp.player.logout")
         .AddHandler<JiliTransferMessageHandler>(GameProviderType.JiliTransfer.SubjectToString(), GameProviderType.JiliTransfer.SubjectToString())
         .AddHandler<WMCasinoTransferMessageHandler>("gp.player.logout")
