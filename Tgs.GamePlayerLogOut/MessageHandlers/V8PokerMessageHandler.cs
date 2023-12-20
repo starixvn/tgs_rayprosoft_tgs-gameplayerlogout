@@ -6,19 +6,10 @@ using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.MessageHandlers;
 
-public class V8PokerMessageHandler : IMessageHandler
+public class V8PokerMessageHandler(
+    ILogger<V8PokerMessageHandler> logger,
+    ICommandService<LogOutCommand> service) : IMessageHandler
 {
-    private readonly ILogger<V8PokerMessageHandler> _logger;
-    private readonly ICommandService<LogOutCommand> _service;
-
-    public V8PokerMessageHandler(
-        ILogger<V8PokerMessageHandler> logger,
-        ICommandService<LogOutCommand> service)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _service = service ?? throw new ArgumentNullException(nameof(service));
-    }
-
     public ValueTask HandleAsync(ReadOnlyMemory<byte> data, CancellationToken cancellationToken = default)
     {
         var request = PlayerLogOutRequest.Parser.ParseFrom(data.Span) ??
@@ -28,9 +19,9 @@ public class V8PokerMessageHandler : IMessageHandler
             GameProviderType.V8Poker,
             request.PlayerCode);
 
-        _logger.LogInformation("LogOn:{logOn} Information Command:{command}", DateTime.Now.ToString("o"), command);
+        logger.LogInformation("LogOn:{logOn} Command content:{command}", DateTime.Now.ToString("o"), command);
 
-        return _service
+        return service
             .ExecuteAsync(
             command: command,
             cancellationToken: cancellationToken);

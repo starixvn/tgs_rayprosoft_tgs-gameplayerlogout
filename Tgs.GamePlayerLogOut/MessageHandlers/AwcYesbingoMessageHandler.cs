@@ -6,19 +6,10 @@ using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.MessageHandlers;
 
-internal class AwcYesbingoMessageHandler : IMessageHandler
+internal class AwcYesbingoMessageHandler(
+    ILogger<AwcYesbingoMessageHandler> logger,
+    ICommandService<LogOutCommand> service) : IMessageHandler
 {
-    private readonly ILogger<AwcYesbingoMessageHandler> _logger;
-    private readonly ICommandService<LogOutCommand> _service;
-
-    public AwcYesbingoMessageHandler(
-         ICommandService<LogOutCommand> service,
-         ILogger<AwcYesbingoMessageHandler> logger)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _service = service ?? throw new ArgumentNullException(nameof(service));
-    }
-
     public ValueTask HandleAsync(
         ReadOnlyMemory<byte> data,
         CancellationToken cancellationToken = default)
@@ -30,9 +21,9 @@ internal class AwcYesbingoMessageHandler : IMessageHandler
             GameProviderType.AWC_YESBINGO,
             request.PlayerCode);
 
-        _logger.LogInformation("LogOn:{logOn} Information Command:{command}", DateTime.Now.ToString("o"), command);
+        logger.LogInformation("LogOn:{logOn} Command content:{command}", DateTime.Now.ToString("o"), command);
 
-        return _service
+        return service
             .ExecuteAsync(
             command: command,
             cancellationToken: cancellationToken);

@@ -61,7 +61,7 @@ public class PlayerController : ControllerBase
         };
 
         return messageSender.PublishAsync(
-            subject: gameProviderCode.SubjectToString(),
+            subject: gameProviderCode.ToGamePlayerLogOutSubject(),
             data: request.ToByteArray(),
             cancellationToken: HttpContext.RequestAborted);
     }

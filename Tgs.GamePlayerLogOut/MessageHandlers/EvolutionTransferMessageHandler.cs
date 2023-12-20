@@ -6,19 +6,10 @@ using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.MessageHandlers;
 
-public class EvolutionTransferMessageHandler : IMessageHandler
+public class EvolutionTransferMessageHandler(
+    ILogger<EvolutionTransferMessageHandler> logger,
+    ICommandService<LogOutCommand> service) : IMessageHandler
 {
-    private readonly ILogger<EvolutionTransferMessageHandler> _logger;
-    private readonly ICommandService<LogOutCommand> _service;
-
-    public EvolutionTransferMessageHandler(
-        ILogger<EvolutionTransferMessageHandler> logger,
-        ICommandService<LogOutCommand> service)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _service = service ?? throw new ArgumentNullException(nameof(service));
-    }
-
     public ValueTask HandleAsync(ReadOnlyMemory<byte> data, CancellationToken cancellationToken = default)
     {
         var request = PlayerLogOutRequest.Parser.ParseFrom(data.Span) ??
@@ -28,9 +19,9 @@ public class EvolutionTransferMessageHandler : IMessageHandler
             GameProviderType.EvolutionTransfer,
             request.PlayerCode);
 
-        _logger.LogInformation("LogOn:{logOn} Information Command:{command}", DateTime.Now.ToString("o"), command);
+        logger.LogInformation("LogOn:{logOn} Command content:{command}", DateTime.Now.ToString("o"), command);
 
-        return _service
+        return service
             .ExecuteAsync(
             command: command,
             cancellationToken: cancellationToken);

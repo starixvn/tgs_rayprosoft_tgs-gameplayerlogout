@@ -6,19 +6,10 @@ using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.MessageHandlers;
 
-public class JokerMessageHandler : IMessageHandler
+public class JokerMessageHandler(
+    ICommandService<LogOutCommand> service,
+    ILogger<JokerMessageHandler> logger) : IMessageHandler
 {
-    private readonly ILogger<JokerMessageHandler> _logger;
-    private readonly ICommandService<LogOutCommand> _service;
-
-    public JokerMessageHandler(
-        ICommandService<LogOutCommand> service,
-        ILogger<JokerMessageHandler> logger)
-    {
-        _service = service ?? throw new ArgumentNullException(nameof(service));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
-
     public ValueTask HandleAsync(
         ReadOnlyMemory<byte> data,
         CancellationToken cancellationToken = default)
@@ -30,9 +21,9 @@ public class JokerMessageHandler : IMessageHandler
             GameProviderType.Joker,
             request.PlayerCode);
 
-        _logger.LogInformation("LogOn:{logOn} Information Command:{command}", DateTime.Now.ToString("o"), command);
+        logger.LogInformation("LogOn:{logOn} Command content:{command}", DateTime.Now.ToString("o"), command);
 
-        return _service
+        return service
             .ExecuteAsync(
             command: command,
             cancellationToken: cancellationToken);

@@ -1,10 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>0.0.5</Version>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Version>0.0.6</Version>
 		<Authors>Raypro</Authors>
 		<RootNamespace>Tgs.GamePlayerLogOut.Client</RootNamespace>
 		<PackageId>Tgs.GamePlayerLogOut.Client</PackageId>

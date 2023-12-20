@@ -1,7 +1,6 @@
 ﻿using System.Net.Mime;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
-using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -9,11 +8,9 @@ using Tgs.GamePlayerLogOut.Core.Extensions;
 using Tgs.GamePlayerLogOut.MessageHandlers;
 using Tgs.GameProviders.Domains;
 
-var builder = WebApplication.CreateBuilder(args);
+var filterInstrumentations = new[] { "html", "ico", "png", "jpg" };
 
-builder.Configuration
-    .AddJsonFile("/config/appsettings.json", true)
-    .AddEnvironmentVariables();
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging
     .AddOpenTelemetry(options =>
@@ -62,7 +59,7 @@ builder.Services.AddGamePlayerLogOutCore(
     {
         var configuration = sp.GetRequiredService<IConfiguration>();
         options.BaseUrl = configuration.GetValue<Uri>("GamePlayerLogOutSettings:GameProvidersClientBaseUrl")!;
-    } );
+    });
 
 builder.Services
     .AddMessageQueue()
@@ -75,109 +72,81 @@ builder.Services
             options.Url = configuration.GetConnectionString("Nats")!;
         })
         .AddHandler<KYMessageHandler>("gp.player.logout")
-        .AddHandler<KYMessageHandler>(GameProviderType.Kaiyuan.SubjectToString(), GameProviderType.Kaiyuan.SubjectToString())
+        .AddHandler<KYMessageHandler>(GameProviderType.Kaiyuan.ToGamePlayerLogOutSubject(), GameProviderType.Kaiyuan.ToGamePlayerLogOutSubject())
         .AddHandler<VRMessageHandler>("gp.player.logout")
-        .AddHandler<VRMessageHandler>(GameProviderType.VR.SubjectToString(), GameProviderType.VR.SubjectToString())
+        .AddHandler<VRMessageHandler>(GameProviderType.VR.ToGamePlayerLogOutSubject(), GameProviderType.VR.ToGamePlayerLogOutSubject())
         .AddHandler<WGViaGamingMessageHandler>("gp.player.logout")
-        .AddHandler<WGViaGamingMessageHandler>(GameProviderType.WGViaGaming.SubjectToString(), GameProviderType.WGViaGaming.SubjectToString())
+        .AddHandler<WGViaGamingMessageHandler>(GameProviderType.WGViaGaming.ToGamePlayerLogOutSubject(), GameProviderType.WGViaGaming.ToGamePlayerLogOutSubject())
         .AddHandler<WGFmGamingMessageHandler>("gp.player.logout")
-        .AddHandler<WGFmGamingMessageHandler>(GameProviderType.WGFmGaming.SubjectToString(), GameProviderType.WGFmGaming.SubjectToString())
+        .AddHandler<WGFmGamingMessageHandler>(GameProviderType.WGFmGaming.ToGamePlayerLogOutSubject(), GameProviderType.WGFmGaming.ToGamePlayerLogOutSubject())
         .AddHandler<BigGamingMessageHandler>("gp.player.logout")
-        .AddHandler<BigGamingMessageHandler>(GameProviderType.BigGaming.SubjectToString(), GameProviderType.BigGaming.SubjectToString())
+        .AddHandler<BigGamingMessageHandler>(GameProviderType.BigGaming.ToGamePlayerLogOutSubject(), GameProviderType.BigGaming.ToGamePlayerLogOutSubject())
         .AddHandler<TCGMessageHandler>("gp.player.logout")
-        .AddHandler<TCGMessageHandler>(GameProviderType.TCG.SubjectToString(), GameProviderType.TCG.SubjectToString())
+        .AddHandler<TCGMessageHandler>(GameProviderType.TCG.ToGamePlayerLogOutSubject(), GameProviderType.TCG.ToGamePlayerLogOutSubject())
         .AddHandler<LEGamingMessageHandler>("gp.player.logout")
-        .AddHandler<LEGamingMessageHandler>(GameProviderType.LEGaming.SubjectToString(), GameProviderType.LEGaming.SubjectToString())
-        .AddHandler<SBOMessageHandler>("gp.player.logout")
-        .AddHandler<SBOMessageHandler>(GameProviderType.SBOBET.SubjectToString(), GameProviderType.SBOBET.SubjectToString())
-        .AddHandler<WMCasinoMessageHandler>("gp.player.logout")
-        .AddHandler<WMCasinoMessageHandler>(GameProviderType.WMCasino.SubjectToString(), GameProviderType.WMCasino.SubjectToString())
-        .AddHandler<PragmaticPlayMessageHandler>("gp.player.logout")
-        .AddHandler<PragmaticPlayMessageHandler>(GameProviderType.PragmaticPlay.SubjectToString(), GameProviderType.PragmaticPlay.SubjectToString())
-        .AddHandler<SabaMessageHandler>("gp.player.logout")
-        .AddHandler<SabaMessageHandler>(GameProviderType.Saba.SubjectToString(), GameProviderType.Saba.SubjectToString())
-        .AddHandler<AviaMessageHandler>("gp.player.logout")
-        .AddHandler<AviaMessageHandler>(GameProviderType.AVIAGaming.SubjectToString(), GameProviderType.AVIAGaming.SubjectToString())
-        .AddHandler<JiliMessageHandler>("gp.player.logout")
-        .AddHandler<JiliMessageHandler>(GameProviderType.Jili.SubjectToString(), GameProviderType.Jili.SubjectToString())
-        .AddHandler<TFGamingMessageHandler>("gp.player.logout")
-        .AddHandler<TFGamingMessageHandler>(GameProviderType.TFGaming.SubjectToString(), GameProviderType.TFGaming.SubjectToString())
-        .AddHandler<AllBetMessageHandler>("gp.player.logout")
-        .AddHandler<AllBetMessageHandler>(GameProviderType.AllBet.SubjectToString(), GameProviderType.AllBet.SubjectToString())
-        .AddHandler<HabaneroMessageHandler>("gp.player.logout")
-        .AddHandler<HabaneroMessageHandler>(GameProviderType.Habanero.SubjectToString(), GameProviderType.Habanero.SubjectToString())
-        .AddHandler<Card365MessageHandler>("gp.player.logout")
-        .AddHandler<Card365MessageHandler>(GameProviderType.Card365.SubjectToString(), GameProviderType.Card365.SubjectToString())
-        .AddHandler<JDBMessageHandler>("gp.player.logout")
-        .AddHandler<JDBMessageHandler>(GameProviderType.JDB.SubjectToString(), GameProviderType.JDB.SubjectToString())
-        .AddHandler<DreamGameMessageHandler>("gp.player.logout")
-        .AddHandler<DreamGameMessageHandler>(GameProviderType.DreamGame.SubjectToString(), GameProviderType.DreamGame.SubjectToString())
+        .AddHandler<LEGamingMessageHandler>(GameProviderType.LEGaming.ToGamePlayerLogOutSubject(), GameProviderType.LEGaming.ToGamePlayerLogOutSubject())
+        .AddHandler<Cards365TransferMessageHandler>("gp.player.logout")
+        .AddHandler<Cards365TransferMessageHandler>(GameProviderType.Cards365Transfer.ToGamePlayerLogOutSubject(), GameProviderType.Cards365Transfer.ToGamePlayerLogOutSubject())
         .AddHandler<JokerMessageHandler>("gp.player.logout")
-        .AddHandler<JokerMessageHandler>(GameProviderType.Joker.SubjectToString(), $"gp.player.logout.{GameProviderType.Joker.SubjectToString()}")
+        .AddHandler<JokerMessageHandler>(GameProviderType.Joker.ToGamePlayerLogOutSubject(), $"gp.player.logout.{GameProviderType.Joker.ToGamePlayerLogOutSubject()}")
         .AddHandler<PragmaticPlayTransferMessageHandler>("gp.player.logout")
-        .AddHandler<PragmaticPlayTransferMessageHandler>(GameProviderType.PragmaticPlayTransfer.SubjectToString(), GameProviderType.PragmaticPlayTransfer.SubjectToString())
-        .AddHandler<AwcAelottoMessageHandler>("gp.player.logout")
-        .AddHandler<AwcAelottoMessageHandler>(GameProviderType.AWC_AELOTTO.SubjectToString(), GameProviderType.AWC_AELOTTO.SubjectToString())
-        .AddHandler<AwcAwsMessageHandler>("gp.player.logout")
-        .AddHandler<AwcAwsMessageHandler>(GameProviderType.AWC_AWS.SubjectToString(), GameProviderType.AWC_AWS.SubjectToString())
+        .AddHandler<PragmaticPlayTransferMessageHandler>(GameProviderType.PragmaticPlayTransfer.ToGamePlayerLogOutSubject(), GameProviderType.PragmaticPlayTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<AwcCockfightMessageHandler>("gp.player.logout")
-        .AddHandler<AwcCockfightMessageHandler>(GameProviderType.AWC_COCKFIGHT.SubjectToString(), GameProviderType.AWC_COCKFIGHT.SubjectToString())
-        .AddHandler<AwcFacaiMessageHandler>("gp.player.logout")
-        .AddHandler<AwcFacaiMessageHandler>(GameProviderType.AWC_FACAI.SubjectToString(), GameProviderType.AWC_FACAI.SubjectToString())
+        .AddHandler<AwcCockfightMessageHandler>(GameProviderType.AWC_COCKFIGHT.ToGamePlayerLogOutSubject(), GameProviderType.AWC_COCKFIGHT.ToGamePlayerLogOutSubject())
         .AddHandler<AwcFsMessageHandler>("gp.player.logout")
-        .AddHandler<AwcFsMessageHandler>(GameProviderType.AWC_FS.SubjectToString(), GameProviderType.AWC_FS.SubjectToString())
+        .AddHandler<AwcFsMessageHandler>(GameProviderType.AWC_FS.ToGamePlayerLogOutSubject(), GameProviderType.AWC_FS.ToGamePlayerLogOutSubject())
         .AddHandler<AwcKmMessageHandler>("gp.player.logout")
-        .AddHandler<AwcKmMessageHandler>(GameProviderType.AWC_KM.SubjectToString(), GameProviderType.AWC_KM.SubjectToString())
+        .AddHandler<AwcKmMessageHandler>(GameProviderType.AWC_KM.ToGamePlayerLogOutSubject(), GameProviderType.AWC_KM.ToGamePlayerLogOutSubject())
         .AddHandler<AwcLudoMessageHandler>("gp.player.logout")
-        .AddHandler<AwcLudoMessageHandler>(GameProviderType.AWC_LUDO.SubjectToString(), GameProviderType.AWC_LUDO.SubjectToString())
+        .AddHandler<AwcLudoMessageHandler>(GameProviderType.AWC_LUDO.ToGamePlayerLogOutSubject(), GameProviderType.AWC_LUDO.ToGamePlayerLogOutSubject())
         .AddHandler<AwcPgsMessageHandler>("gp.player.logout")
-        .AddHandler<AwcPgsMessageHandler>(GameProviderType.AWC_PGS.SubjectToString(), GameProviderType.AWC_PGS.SubjectToString())
+        .AddHandler<AwcPgsMessageHandler>(GameProviderType.AWC_PGS.ToGamePlayerLogOutSubject(), GameProviderType.AWC_PGS.ToGamePlayerLogOutSubject())
         .AddHandler<AwcRcbMessageHandler>("gp.player.logout")
-        .AddHandler<AwcRcbMessageHandler>(GameProviderType.AWC_RCB.SubjectToString(), GameProviderType.AWC_RCB.SubjectToString())
+        .AddHandler<AwcRcbMessageHandler>(GameProviderType.AWC_RCB.ToGamePlayerLogOutSubject(), GameProviderType.AWC_RCB.ToGamePlayerLogOutSubject())
         .AddHandler<AwcSgMessageHandler>("gp.player.logout")
-        .AddHandler<AwcSgMessageHandler>(GameProviderType.AWC_SG.SubjectToString(), GameProviderType.AWC_SG.SubjectToString())
+        .AddHandler<AwcSgMessageHandler>(GameProviderType.AWC_SG.ToGamePlayerLogOutSubject(), GameProviderType.AWC_SG.ToGamePlayerLogOutSubject())
         .AddHandler<AwcSpadeMessageHandler>("gp.player.logout")
-        .AddHandler<AwcSpadeMessageHandler>(GameProviderType.AWC_SPADE.SubjectToString(), GameProviderType.AWC_SPADE.SubjectToString())
+        .AddHandler<AwcSpadeMessageHandler>(GameProviderType.AWC_SPADE.ToGamePlayerLogOutSubject(), GameProviderType.AWC_SPADE.ToGamePlayerLogOutSubject())
         .AddHandler<AwcVenusMessageHandler>("gp.player.logout")
-        .AddHandler<AwcVenusMessageHandler>(GameProviderType.AWC_VENUS.SubjectToString(), GameProviderType.AWC_VENUS.SubjectToString())
+        .AddHandler<AwcVenusMessageHandler>(GameProviderType.AWC_VENUS.ToGamePlayerLogOutSubject(), GameProviderType.AWC_VENUS.ToGamePlayerLogOutSubject())
         .AddHandler<AwcYlMessageHandler>("gp.player.logout")
-        .AddHandler<AwcYlMessageHandler>(GameProviderType.AWC_YL.SubjectToString(), GameProviderType.AWC_YL.SubjectToString())
+        .AddHandler<AwcYlMessageHandler>(GameProviderType.AWC_YL.ToGamePlayerLogOutSubject(), GameProviderType.AWC_YL.ToGamePlayerLogOutSubject())
         .AddHandler<AwcYesbingoMessageHandler>("gp.player.logout")
-        .AddHandler<AwcYesbingoMessageHandler>(GameProviderType.AWC_YESBINGO.SubjectToString(), GameProviderType.AWC_YESBINGO.SubjectToString())
+        .AddHandler<AwcYesbingoMessageHandler>(GameProviderType.AWC_YESBINGO.ToGamePlayerLogOutSubject(), GameProviderType.AWC_YESBINGO.ToGamePlayerLogOutSubject())
         .AddHandler<JiliTransferMessageHandler>("gp.player.logout")
-        .AddHandler<JiliTransferMessageHandler>(GameProviderType.JiliTransfer.SubjectToString(), GameProviderType.JiliTransfer.SubjectToString())
+        .AddHandler<JiliTransferMessageHandler>(GameProviderType.JiliTransfer.ToGamePlayerLogOutSubject(), GameProviderType.JiliTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<WMCasinoTransferMessageHandler>("gp.player.logout")
-        .AddHandler<WMCasinoTransferMessageHandler>(GameProviderType.WMCasinoTransfer.SubjectToString(), GameProviderType.WMCasinoTransfer.SubjectToString())
+        .AddHandler<WMCasinoTransferMessageHandler>(GameProviderType.WMCasinoTransfer.ToGamePlayerLogOutSubject(), GameProviderType.WMCasinoTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<EvolutionTransferMessageHandler>("gp.player.logout")
-        .AddHandler<EvolutionTransferMessageHandler>(GameProviderType.EvolutionTransfer.SubjectToString(), GameProviderType.EvolutionTransfer.SubjectToString())
+        .AddHandler<EvolutionTransferMessageHandler>(GameProviderType.EvolutionTransfer.ToGamePlayerLogOutSubject(), GameProviderType.EvolutionTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<JDBTransferMessageHandler>("gp.player.logout")
-        .AddHandler<JDBTransferMessageHandler>(GameProviderType.JDBTransfer.SubjectToString(), GameProviderType.JDBTransfer.SubjectToString())
+        .AddHandler<JDBTransferMessageHandler>(GameProviderType.JDBTransfer.ToGamePlayerLogOutSubject(), GameProviderType.JDBTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<SBOTransferMessageHandler>("gp.player.logout")
-        .AddHandler<SBOTransferMessageHandler>(GameProviderType.SBOTransfer.SubjectToString(), GameProviderType.SBOTransfer.SubjectToString())
+        .AddHandler<SBOTransferMessageHandler>(GameProviderType.SBOTransfer.ToGamePlayerLogOutSubject(), GameProviderType.SBOTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<HabaneroTransferMessageHandler>("gp.player.logout")
-        .AddHandler<HabaneroTransferMessageHandler>(GameProviderType.HabaneroTransfer.SubjectToString(), GameProviderType.HabaneroTransfer.SubjectToString())
+        .AddHandler<HabaneroTransferMessageHandler>(GameProviderType.HabaneroTransfer.ToGamePlayerLogOutSubject(), GameProviderType.HabaneroTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<SabaTransferMessageHandler>("gp.player.logout")
-        .AddHandler<SabaTransferMessageHandler>(GameProviderType.SabaTransfer.SubjectToString(), GameProviderType.SabaTransfer.SubjectToString())
+        .AddHandler<SabaTransferMessageHandler>(GameProviderType.SabaTransfer.ToGamePlayerLogOutSubject(), GameProviderType.SabaTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<TFGamingTransferMessageHandler>("gp.player.logout")
-        .AddHandler<TFGamingTransferMessageHandler>(GameProviderType.TFGamingTransfer.SubjectToString(), GameProviderType.TFGamingTransfer.SubjectToString())
+        .AddHandler<TFGamingTransferMessageHandler>(GameProviderType.TFGamingTransfer.ToGamePlayerLogOutSubject(), GameProviderType.TFGamingTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<DreamGamingTransferMessageHandler>("gp.player.logout")
-        .AddHandler<DreamGamingTransferMessageHandler>(GameProviderType.DreamGamingTransfer.SubjectToString(), GameProviderType.DreamGamingTransfer.SubjectToString())
+        .AddHandler<DreamGamingTransferMessageHandler>(GameProviderType.DreamGamingTransfer.ToGamePlayerLogOutSubject(), GameProviderType.DreamGamingTransfer.ToGamePlayerLogOutSubject())
         .AddHandler<FachaiMessageHandler>("gp.player.logout")
-        .AddHandler<FachaiMessageHandler>(GameProviderType.FaChai.SubjectToString(), GameProviderType.FaChai.SubjectToString())
+        .AddHandler<FachaiMessageHandler>(GameProviderType.FaChai.ToGamePlayerLogOutSubject(), GameProviderType.FaChai.ToGamePlayerLogOutSubject())
         .AddHandler<EndorphinaMessageHandler>("gp.player.logout")
-        .AddHandler<EndorphinaMessageHandler>(GameProviderType.Endorphina.SubjectToString(), GameProviderType.Endorphina.SubjectToString())
+        .AddHandler<EndorphinaMessageHandler>(GameProviderType.Endorphina.ToGamePlayerLogOutSubject(), GameProviderType.Endorphina.ToGamePlayerLogOutSubject())
         .AddHandler<OBetMessageHandler>("gp.player.logout")
-        .AddHandler<OBetMessageHandler>(GameProviderType.OBet.SubjectToString(), GameProviderType.OBet.SubjectToString())
+        .AddHandler<OBetMessageHandler>(GameProviderType.OBet.ToGamePlayerLogOutSubject(), GameProviderType.OBet.ToGamePlayerLogOutSubject())
         .AddHandler<YeeBetMessageHandler>("gp.player.logout")
-        .AddHandler<YeeBetMessageHandler>(GameProviderType.YeeBet.SubjectToString(), GameProviderType.YeeBet.SubjectToString())
+        .AddHandler<YeeBetMessageHandler>(GameProviderType.YeeBet.ToGamePlayerLogOutSubject(), GameProviderType.YeeBet.ToGamePlayerLogOutSubject())
         .AddHandler<PinnacleMessageHandler>("gp.player.logout")
-        .AddHandler<PinnacleMessageHandler>(GameProviderType.Pinnacle.SubjectToString(), GameProviderType.Pinnacle.SubjectToString())
+        .AddHandler<PinnacleMessageHandler>(GameProviderType.Pinnacle.ToGamePlayerLogOutSubject(), GameProviderType.Pinnacle.ToGamePlayerLogOutSubject())
         .AddHandler<WicketCricketMessageHandler>("gp.player.logout")
-        .AddHandler<WicketCricketMessageHandler>(GameProviderType.WicketCricket.SubjectToString(), GameProviderType.WicketCricket.SubjectToString())
+        .AddHandler<WicketCricketMessageHandler>(GameProviderType.WicketCricket.ToGamePlayerLogOutSubject(), GameProviderType.WicketCricket.ToGamePlayerLogOutSubject())
         .AddHandler<GKXGamingMessageHandler>("gp.player.logout")
-        .AddHandler<GKXGamingMessageHandler>(GameProviderType.GKXGaming.SubjectToString(), GameProviderType.GKXGaming.SubjectToString())
+        .AddHandler<GKXGamingMessageHandler>(GameProviderType.GKXGaming.ToGamePlayerLogOutSubject(), GameProviderType.GKXGaming.ToGamePlayerLogOutSubject())
         .AddHandler<V8PokerMessageHandler>("gp.player.logout")
-        .AddHandler<V8PokerMessageHandler>(GameProviderType.V8Poker.SubjectToString(), GameProviderType.V8Poker.SubjectToString());
+        .AddHandler<V8PokerMessageHandler>(GameProviderType.V8Poker.ToGamePlayerLogOutSubject(), GameProviderType.V8Poker.ToGamePlayerLogOutSubject());
     })
     .ClearAllExchanges()
     .AddNatsGlobPatternExchange("*");
@@ -189,8 +158,14 @@ builder.Services
             .AddEnvironmentVariableDetector())
         .AddSource("Tgs.*")
         .AddSource("TGS.*")
-        .AddSource("Valhalla.*")
-        .AddAspNetCoreInstrumentation()
+        .AddAspNetCoreInstrumentation(options => options.Filter =
+            httpContext => !httpContext.Request.Path.HasValue
+            || !httpContext.Request.Path.StartsWithSegments("/swagger")
+            && !httpContext.Request.Path.StartsWithSegments("/healthz")
+            && !httpContext.Request.Path.StartsWithSegments("/profiler/")
+            && !httpContext.Request.Path.StartsWithSegments("/hangfire")
+            && !httpContext.Request.Path.StartsWithSegments("/metrics")
+            && !filterInstrumentations.Any(ext => httpContext.Request.Path.Value.EndsWith($".{ext}")))
         .AddHttpClientInstrumentation()
         .AddGrpcClientInstrumentation()
         .AddGrpcCoreInstrumentation()
@@ -198,20 +173,11 @@ builder.Services
         .AddOtlpExporter())
     .WithMetrics(meterBuiler => meterBuiler
     .SetResourceBuilder(ResourceBuilder.CreateDefault()
-    .AddEnvironmentVariableDetector())
-    .AddRuntimeInstrumentation()
-    .AddAspNetCoreInstrumentation()
-    .AddOtlpExporter())
+        .AddEnvironmentVariableDetector())
+        .AddRuntimeInstrumentation()
+        .AddAspNetCoreInstrumentation()
+        .AddOtlpExporter())
     .Services
-    .Configure<AspNetCoreInstrumentationOptions>(options => options.Filter =
-        httpContext => !httpContext.Request.Path.HasValue
-            || !httpContext.Request.Path.StartsWithSegments("/swagger")
-            && !httpContext.Request.Path.StartsWithSegments("/healthz")
-            && !httpContext.Request.Path.StartsWithSegments("/profiler/")
-            && !httpContext.Request.Path.StartsWithSegments("/hangfire")
-            && !httpContext.Request.Path.StartsWithSegments("/metrics")
-            && !new[] { "html", "ico", "png", "jpg" }.Any(
-                ext => httpContext.Request.Path.Value.EndsWith($".{ext}")))
     .AddInterceptionService()
     .AddServiceUtiltiyInterceptors();
 

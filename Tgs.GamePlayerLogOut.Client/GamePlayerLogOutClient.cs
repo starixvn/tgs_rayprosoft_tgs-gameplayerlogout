@@ -38,7 +38,7 @@ internal class GamePlayerLogOutClient : IGamePlayerLogOutClient
         };
 
         return _messageSender.PublishAsync(
-            subject: gameProviderCode.SubjectToString(),
+            subject: gameProviderCode.ToGamePlayerLogOutSubject(),
             data: request.ToByteArray(),
             cancellationToken: cancellationToken);
     }

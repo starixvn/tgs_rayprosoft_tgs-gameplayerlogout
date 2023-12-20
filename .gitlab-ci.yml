@@ -80,7 +80,13 @@ push-docker-image:
     untracked: true   
     policy: pull
   script:
-    - dotnet build "Tgs.GamePlayerLogOut/Tgs.GamePlayerLogOut.csproj" -c $BuildConfiguration -t:ContainerBuild -p:DockerfileTag="$ImageName:$Tag" --no-restore
+    #- dotnet build "Tgs.GamePlayerLogOut/Tgs.GamePlayerLogOut.csproj" -c $BuildConfiguration -t:ContainerBuild -p:DockerfileTag="$ImageName:$Tag" --no-restore
+    - dotnet publish "Tgs.GamePlayerLogOut" 
+       --os linux --arch x64
+       /t:PublishContainer
+       -c $BuildConfiguration
+       /p:ContainerRepository=$ImageName
+       /p:ContainerImageTag=$Tag
     - docker push $ImageName:$Tag
 
 push-k8s-template:
@@ -133,7 +139,11 @@ deploy-dev:
         "nodeSelector": $node_selector,
         "tolerations": [$dedicated],
         "resources": $resources,
-        "autoscaling": $autoscaling
+        "autoscaling": $autoscaling,
+        "restart": {
+            "enabled": true,
+            "schedule": "45 0 * * *"
+        }
       }
       EOF
     - |
@@ -146,7 +156,11 @@ deploy-dev:
         "nodeSelector": $node_selector,
         "tolerations": [$dedicated],
         "resources": $resources,
-        "autoscaling": $autoscaling
+        "autoscaling": $autoscaling,
+        "restart": {
+            "enabled": true,
+            "schedule": "45 0 * * *"
+        }
       }
       EOF
 
@@ -180,7 +194,11 @@ deploy-staging:
         "nodeSelector": $node_selector,
         "tolerations": [$dedicated],
         "resources": $resources,
-        "autoscaling": $autoscaling
+        "autoscaling": $autoscaling,
+        "restart": {
+            "enabled": true,
+            "schedule": "45 0 * * *"
+        }
       }
       EOF
     - |
@@ -193,7 +211,11 @@ deploy-staging:
         "nodeSelector": $node_selector,
         "tolerations": [$dedicated],
         "resources": $resources,
-        "autoscaling": $autoscaling
+        "autoscaling": $autoscaling,
+        "restart": {
+            "enabled": true,
+            "schedule": "45 0 * * *"
+        }
       }
       EOF
 
@@ -227,7 +249,11 @@ deploy-prod:
         "nodeSelector": $node_selector,
         "tolerations": [$dedicated],
         "resources": $resources,
-        "autoscaling": $autoscaling
+        "autoscaling": $autoscaling,
+        "restart": {
+            "enabled": true,
+            "schedule": "45 0 * * *"
+        }
       }
       EOF
     - |
@@ -240,6 +266,10 @@ deploy-prod:
         "nodeSelector": $node_selector,
         "tolerations": [$dedicated],
         "resources": $resources,
-        "autoscaling": $autoscaling
+        "autoscaling": $autoscaling,
+        "restart": {
+            "enabled": true,
+            "schedule": "45 0 * * *"
+        }
       }
       EOF

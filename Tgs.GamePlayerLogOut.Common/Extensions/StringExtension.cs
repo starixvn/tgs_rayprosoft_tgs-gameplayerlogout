@@ -2,6 +2,6 @@
 
 public static class StringExtension
 {
-    public static string SubjectToString(this string str)
+    public static string ToGamePlayerLogOutSubject(this string str)
     => $"gp.player.logout.{str.Replace("_", ".").ToLower()}";
 }

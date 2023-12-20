@@ -5,46 +5,35 @@ using Tgs.ServiceUtility;
 
 namespace Tgs.GamePlayerLogOut.Core.ApplicationServices;
 
-internal class LogOutCommandService : ICommandService<LogOutCommand>
+internal class LogOutCommandService(
+    ILogger<LogOutCommandService> logger,
+    IGameCommandClient gameCommandClient,
+    IGameProvidersClient client) : ICommandService<LogOutCommand>
 {
-    private readonly IGameProvidersClient _client;
-    private readonly IGameCommandClient _gameCommandClient;
-    private readonly ILogger<LogOutCommandService> _logger;
-
-    public LogOutCommandService(
-        ILogger<LogOutCommandService> logger,
-        IGameCommandClient gameCommandClient,
-        IGameProvidersClient client)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _gameCommandClient = gameCommandClient ?? throw new ArgumentNullException(nameof(gameCommandClient));
-        _client = client ?? throw new ArgumentNullException(nameof(client));
-    }
-
     public async ValueTask ExecuteAsync(LogOutCommand command, CancellationToken cancellationToken = default)
     {
         try
         {
-            var player = await _gameCommandClient.PlayerGetAsync(
+            var player = await gameCommandClient.PlayerGetAsync(
                 playerCode: command.PlayerCode,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false)
                 ?? throw new NullReferenceException($"This player({command.PlayerCode}) does not exist.");
 
-            var gameProviderId = await _gameCommandClient.GameProviderGetGameProviderIdAsync(
+            var gameProviderId = await gameCommandClient.GameProviderGetGameProviderIdAsync(
                 gameProviderCode: command.GameProviderCode,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false)
                 ?? throw new NullReferenceException($"This game provider({command.GameProviderCode}) does not exist.");
 
-            _ = await _gameCommandClient.BrandGetGameProviderConfigurationIdAsync(
+            _ = await gameCommandClient.BrandGetGameProviderConfigurationIdAsync(
                brandId: player.BrandId,
                gameProviderId: gameProviderId,
                cancellationToken: cancellationToken)
                .ConfigureAwait(false)
                ?? throw new NullReferenceException($"This game provider({command.GameProviderCode}) is not configured on this platform({player.BrandCode}).");
 
-            var gameProvider = await _gameCommandClient.GameProviderGetAsync(
+            var gameProvider = await gameCommandClient.GameProviderGetAsync(
                 gameProviderId: gameProviderId,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false)
@@ -52,7 +41,7 @@ internal class LogOutCommandService : ICommandService<LogOutCommand>
 
             if (gameProvider.AllowKickPlayer)
             {
-                await _client.KickPlayerAsync(
+                await client.KickPlayerAsync(
                     gameProviderCode: command.GameProviderCode,
                     playerCode: command.PlayerCode,
                     cancellationToken: cancellationToken)
@@ -61,11 +50,11 @@ internal class LogOutCommandService : ICommandService<LogOutCommand>
         }
         catch (NullReferenceException ex)
         {
-            _logger.LogInformation(ex, "LogOn:{logOn} Information Command:{command} Message:{message}", DateTime.Now.ToString("o"), command, ex.Message);
+            logger.LogInformation(ex, "LogOn:{logOn} Command content:{command} Message:{message}", DateTime.Now.ToString("o"), command, ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "LogOn:{logOn} Information Command:{command} Message:{message}", DateTime.Now.ToString("o"), command, ex.Message);
+            logger.LogError(ex, "LogOn:{logOn} Command content:{command} Message:{message}", DateTime.Now.ToString("o"), command, ex.Message);
         }
     }
 }
