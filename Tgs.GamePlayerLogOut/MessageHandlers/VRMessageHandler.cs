@@ -18,7 +18,7 @@ internal class VRMessageHandler(
               throw new NullReferenceException("The request data resolves to a null value");
 
         var command = new LogOutCommand(
-            GameProviderType.VR,
+            GameProviderType.VRGaming,
             request.PlayerCode);
 
         logger.LogInformation("LogOn:{logOn} Command content:{command}", DateTime.Now.ToString("o"), command);

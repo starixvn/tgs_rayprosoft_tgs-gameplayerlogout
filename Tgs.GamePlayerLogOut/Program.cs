@@ -74,7 +74,7 @@ builder.Services
         .AddHandler<KYMessageHandler>("gp.player.logout")
         .AddHandler<KYMessageHandler>(GameProviderType.Kaiyuan.ToGamePlayerLogOutSubject(), GameProviderType.Kaiyuan.ToGamePlayerLogOutSubject())
         .AddHandler<VRMessageHandler>("gp.player.logout")
-        .AddHandler<VRMessageHandler>(GameProviderType.VR.ToGamePlayerLogOutSubject(), GameProviderType.VR.ToGamePlayerLogOutSubject())
+        .AddHandler<VRMessageHandler>(GameProviderType.VRGaming.ToGamePlayerLogOutSubject(), GameProviderType.VRGaming.ToGamePlayerLogOutSubject())
         .AddHandler<WGViaGamingMessageHandler>("gp.player.logout")
         .AddHandler<WGViaGamingMessageHandler>(GameProviderType.WGViaGaming.ToGamePlayerLogOutSubject(), GameProviderType.WGViaGaming.ToGamePlayerLogOutSubject())
         .AddHandler<WGFmGamingMessageHandler>("gp.player.logout")
