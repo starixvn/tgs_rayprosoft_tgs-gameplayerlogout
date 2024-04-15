@@ -1,12 +1,14 @@
 ﻿using System.Net.Mime;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
+using NATS.Client.Core;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Tgs.GamePlayerLogOut.Core.Extensions;
 using Tgs.GamePlayerLogOut.MessageHandlers;
 using Tgs.GameProviders.Domains;
+using Tgs.MessageQueue.Nats.Serializers;
 
 var filterInstrumentations = new[] { "html", "ico", "png", "jpg" };
 
@@ -42,8 +44,7 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    var xmlFileNames = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml");
-    foreach (var xmlFileName in xmlFileNames)
+    foreach (var xmlFileName in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml"))
     {
         c.IncludeXmlComments(xmlFileName);
     }
@@ -62,15 +63,14 @@ builder.Services.AddGamePlayerLogOutCore(
     });
 
 builder.Services
-    .AddMessageQueue()
-    .AddNatsMessageQueue(natsConfig =>
+    .AddKeyedSingleton("Nats", (sp, _) => new NatsConnection(NatsOpts.Default with
     {
-        _ = natsConfig
-        .ConfigQueueOptions((options, sp) =>
-        {
-            var configuration = sp.GetRequiredService<IConfiguration>();
-            options.Url = configuration.GetConnectionString("Nats")!;
-        })
+        Url = builder.Configuration.GetConnectionString("Nats")!,
+        SerializerRegistry = TgsNatsSerializerRegistration.Default
+    }))
+    .AddMessageQueue()
+    .AddNatsMessageQueue(config => config
+        .ConfigureResolveConnection(sp => sp.GetRequiredKeyedService<NatsConnection>("Nats"))
         .AddHandler<KYMessageHandler>("gp.player.logout")
         .AddHandler<KYMessageHandler>(GameProviderType.Kaiyuan.ToGamePlayerLogOutSubject(), GameProviderType.Kaiyuan.ToGamePlayerLogOutSubject())
         .AddHandler<VRMessageHandler>("gp.player.logout")
@@ -79,8 +79,6 @@ builder.Services
         .AddHandler<WGViaGamingMessageHandler>(GameProviderType.WGViaGaming.ToGamePlayerLogOutSubject(), GameProviderType.WGViaGaming.ToGamePlayerLogOutSubject())
         .AddHandler<WGFmGamingMessageHandler>("gp.player.logout")
         .AddHandler<WGFmGamingMessageHandler>(GameProviderType.WGFmGaming.ToGamePlayerLogOutSubject(), GameProviderType.WGFmGaming.ToGamePlayerLogOutSubject())
-        .AddHandler<BigGamingMessageHandler>("gp.player.logout")
-        .AddHandler<BigGamingMessageHandler>(GameProviderType.BigGaming.ToGamePlayerLogOutSubject(), GameProviderType.BigGaming.ToGamePlayerLogOutSubject())
         .AddHandler<TCGMessageHandler>("gp.player.logout")
         .AddHandler<TCGMessageHandler>(GameProviderType.TCG.ToGamePlayerLogOutSubject(), GameProviderType.TCG.ToGamePlayerLogOutSubject())
         .AddHandler<LEGamingMessageHandler>("gp.player.logout")
@@ -146,8 +144,11 @@ builder.Services
         .AddHandler<GKXGamingMessageHandler>("gp.player.logout")
         .AddHandler<GKXGamingMessageHandler>(GameProviderType.GKXGaming.ToGamePlayerLogOutSubject(), GameProviderType.GKXGaming.ToGamePlayerLogOutSubject())
         .AddHandler<V8PokerMessageHandler>("gp.player.logout")
-        .AddHandler<V8PokerMessageHandler>(GameProviderType.V8Poker.ToGamePlayerLogOutSubject(), GameProviderType.V8Poker.ToGamePlayerLogOutSubject());
-    })
+        .AddHandler<V8PokerMessageHandler>(GameProviderType.V8Poker.ToGamePlayerLogOutSubject(), GameProviderType.V8Poker.ToGamePlayerLogOutSubject())
+        .AddHandler<TPhereMessageHandler>("gp.player.logout")
+        .AddHandler<TPhereMessageHandler>(GameProviderType.TPhere.ToGamePlayerLogOutSubject(), GameProviderType.V8Poker.ToGamePlayerLogOutSubject())
+        .AddHandler<AwcBgMessageHandler>("gp.player.logout")
+        .AddHandler<AwcBgMessageHandler>(GameProviderType.AWC_BG.ToGamePlayerLogOutSubject(), GameProviderType.V8Poker.ToGamePlayerLogOutSubject()))
     .ClearAllExchanges()
     .AddNatsGlobPatternExchange("*");
 
@@ -158,6 +159,7 @@ builder.Services
             .AddEnvironmentVariableDetector())
         .AddSource("Tgs.*")
         .AddSource("TGS.*")
+        .AddSource("Valhalla.*")
         .AddAspNetCoreInstrumentation(options => options.Filter =
             httpContext => !httpContext.Request.Path.HasValue
             || !httpContext.Request.Path.StartsWithSegments("/swagger")

@@ -8,20 +8,18 @@ namespace Tgs.GamePlayerLogOut.MessageHandlers;
 
 internal class KYMessageHandler(
     ILogger<KYMessageHandler> logger,
-    ICommandService<LogOutCommand> service) : IMessageHandler
+    ICommandService<LogOutCommand> service) : IMessageHandler<PlayerLogOutRequest>
 {
-    public ValueTask HandleAsync(
-        ReadOnlyMemory<byte> data,
-        CancellationToken cancellationToken = default)
+    public ValueTask HandleAsync(string subject, PlayerLogOutRequest data, IEnumerable<MessageHeaderValue>? headerValues, CancellationToken cancellationToken = default)
     {
-        var request = PlayerLogOutRequest.Parser.ParseFrom(data.Span) ??
-              throw new NullReferenceException("The request data resolves to a null value");
-
         var command = new LogOutCommand(
             GameProviderType.Kaiyuan,
-            request.PlayerCode);
+            data.PlayerCode);
 
-        logger.LogInformation("LogOn:{logOn} Command content:{command}", DateTime.Now.ToString("o"), command);
+        logger.LogInformation("LogOn:{logOn} Subject:{subject} Command content:{command} Mesaage:This message has been received.",
+            DateTime.Now.ToString("o"),
+            subject,
+            command);
 
         return service
             .ExecuteAsync(
