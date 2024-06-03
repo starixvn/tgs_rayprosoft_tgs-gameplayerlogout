@@ -75,7 +75,7 @@ public class LogOutCommandServiceUnitTest
 
         await fakeGameProvidersClient
             .Received(0)
-            .KickPlayerAsync(
+            .PlayerLogoutAsync(
             gameProviderCode: Arg.Is(command.GameProviderCode),
             playerCode: Arg.Is(command.PlayerCode),
             cancellationToken: Arg.Any<CancellationToken>());
@@ -147,7 +147,7 @@ public class LogOutCommandServiceUnitTest
 
         await fakeGameProvidersClient
             .Received(1)
-            .KickPlayerAsync(
+            .PlayerLogoutAsync(
             gameProviderCode: Arg.Is(command.GameProviderCode),
             playerCode: Arg.Is(command.PlayerCode),
             cancellationToken: Arg.Any<CancellationToken>());
@@ -207,7 +207,7 @@ public class LogOutCommandServiceUnitTest
 
         await fakeGameProvidersClient
             .Received(0)
-            .KickPlayerAsync(
+            .PlayerLogoutAsync(
             gameProviderCode: Arg.Is(command.GameProviderCode),
             playerCode: Arg.Is(command.PlayerCode),
             cancellationToken: Arg.Any<CancellationToken>());
@@ -254,7 +254,7 @@ public class LogOutCommandServiceUnitTest
 
         await fakeGameProvidersClient
             .Received(0)
-            .KickPlayerAsync(
+            .PlayerLogoutAsync(
             gameProviderCode: Arg.Is(command.GameProviderCode),
             playerCode: Arg.Is(command.PlayerCode),
             cancellationToken: Arg.Any<CancellationToken>());
@@ -308,7 +308,7 @@ public class LogOutCommandServiceUnitTest
 
         await fakeGameProvidersClient
             .Received(0)
-            .KickPlayerAsync(
+            .PlayerLogoutAsync(
             gameProviderCode: Arg.Is(command.GameProviderCode),
             playerCode: Arg.Is(command.PlayerCode),
             cancellationToken: Arg.Any<CancellationToken>());
@@ -339,7 +339,7 @@ public class LogOutCommandServiceUnitTest
 
         await fakeGameProvidersClient
             .Received(0)
-            .KickPlayerAsync(
+            .PlayerLogoutAsync(
             gameProviderCode: Arg.Is(command.GameProviderCode),
             playerCode: Arg.Is(command.PlayerCode),
             cancellationToken: Arg.Any<CancellationToken>());
