@@ -41,7 +41,7 @@ internal class LogOutCommandService(
 
             if (gameProvider.AllowKickPlayer)
             {
-                await client.KickPlayerAsync(
+                await client.PlayerLogoutAsync(
                     gameProviderCode: command.GameProviderCode,
                     playerCode: command.PlayerCode,
                     cancellationToken: cancellationToken)
