@@ -148,7 +148,9 @@ builder.Services
         .AddHandler<TPhereMessageHandler>("gp.player.logout")
         .AddHandler<TPhereMessageHandler>(GameProviderType.TPhere.ToGamePlayerLogOutSubject(), GameProviderType.V8Poker.ToGamePlayerLogOutSubject())
         .AddHandler<AwcBgMessageHandler>("gp.player.logout")
-        .AddHandler<AwcBgMessageHandler>(GameProviderType.AWC_BG.ToGamePlayerLogOutSubject(), GameProviderType.V8Poker.ToGamePlayerLogOutSubject()))
+        .AddHandler<AwcBgMessageHandler>(GameProviderType.AWC_BG.ToGamePlayerLogOutSubject(), GameProviderType.V8Poker.ToGamePlayerLogOutSubject())
+        .AddHandler<AwcBgMessageHandler>("gp.player.logout")
+        .AddHandler<AwcBgMessageHandler>(GameProviderType.CQ9Gaming.ToGamePlayerLogOutSubject(), GameProviderType.CQ9Gaming.ToGamePlayerLogOutSubject()))
     .ClearAllExchanges()
     .AddNatsGlobPatternExchange("*");
 
