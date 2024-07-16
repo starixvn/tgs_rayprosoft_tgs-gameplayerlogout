@@ -11,9 +11,9 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["nuget.config", "."]
 COPY ["Tgs.GamePlayerLogOut/Tgs.GamePlayerLogOut.csproj", "Tgs.GamePlayerLogOut/"]
-COPY ["Tgs.GamePlayerLogOut.Common/Tgs.GamePlayerLogOut.Common.csproj", "Tgs.GamePlayerLogOut.Common/"]
 COPY ["Tgs.GamePlayerLogOut.Core/Tgs.GamePlayerLogOut.Core.csproj", "Tgs.GamePlayerLogOut.Core/"]
-RUN dotnet restore "./Tgs.GamePlayerLogOut/./Tgs.GamePlayerLogOut.csproj"
+COPY ["Tgs.GamePlayerLogOut.Protos/Tgs.GamePlayerLogOut.Protos.csproj", "Tgs.GamePlayerLogOut.Protos/"]
+RUN dotnet restore "./Tgs.GamePlayerLogOut/Tgs.GamePlayerLogOut.csproj"
 COPY . .
 WORKDIR "/src/Tgs.GamePlayerLogOut"
 RUN dotnet build "./Tgs.GamePlayerLogOut.csproj" -c $BUILD_CONFIGURATION -o /app/build
