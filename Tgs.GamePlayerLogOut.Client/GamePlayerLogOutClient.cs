@@ -1,45 +1,27 @@
-﻿using Google.Protobuf;
-using Tgs.GamePlayerLogOut.Common.Protos;
-using Tgs.GamePlayerLogOut.Core.Extensions;
-using Valhalla.MessageQueue;
+﻿namespace Tgs.GamePlayerLogOut.Client;
 
-namespace Tgs.GamePlayerLogOut.Client;
-
-internal class GamePlayerLogOutClient : IGamePlayerLogOutClient
+internal class GamePlayerLogOutClient(HttpClient httpClient) : IGamePlayerLogOutClient
 {
-    private readonly IMessageSender _messageSender;
 
-    public GamePlayerLogOutClient(IMessageSender messageSender)
-    {
-        _messageSender = messageSender ?? throw new ArgumentNullException(nameof(messageSender));
-    }
+	public async ValueTask LogOutAsync(string playerCode, CancellationToken cancellationToken = default)
+	{
+		var response = await httpClient
+			.DeleteAsync(
+			   requestUri: $"player/{playerCode}/logout",
+			   cancellationToken: cancellationToken)
+		   .ConfigureAwait(false);
 
-    public ValueTask LogOutAsync(string playerCode, CancellationToken cancellationToken = default)
-    {
-        var request = new PlayerLogOutRequest
-        {
-            PlayerCode = playerCode,
-        };
+		_ = response.EnsureSuccessStatusCode();
+	}
 
-        return _messageSender.PublishAsync(
-            subject: "gp.player.logout",
-            data: request.ToByteArray(),
-            cancellationToken: cancellationToken);
-    }
+	public async ValueTask LogOutAsync(string playerCode,string gameProviderCode,	CancellationToken cancellationToken = default)
+	{
+		var response = await httpClient
+			.DeleteAsync(
+			   requestUri: $"player/{playerCode}/{gameProviderCode}/logout",
+			   cancellationToken: cancellationToken)
+		   .ConfigureAwait(false);
 
-    public ValueTask LogOutAsync(
-        string playerCode,
-        string gameProviderCode,
-        CancellationToken cancellationToken = default)
-    {
-        var request = new PlayerLogOutRequest
-        {
-            PlayerCode = playerCode,
-        };
-
-        return _messageSender.PublishAsync(
-            subject: gameProviderCode.ToGamePlayerLogOutSubject(),
-            data: request.ToByteArray(),
-            cancellationToken: cancellationToken);
-    }
+		_ = response.EnsureSuccessStatusCode();
+	}
 }

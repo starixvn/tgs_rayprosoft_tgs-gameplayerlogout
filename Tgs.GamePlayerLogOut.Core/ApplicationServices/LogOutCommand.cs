@@ -1,5 +1,5 @@
 ﻿namespace Tgs.GamePlayerLogOut.Core.ApplicationServices;
 
 public record LogOutCommand(
-    string GameProviderCode,
-    string PlayerCode);
+	string GameProviderCode,
+	string PlayerCode);
