@@ -4,6 +4,7 @@ using Tgs.GamePlayerLogOut.Client;
 using Valhalla.MessageQueue;
 
 namespace Tgs.GamePlayerLogOut.IntegrationTest;
+
 public partial class GamePlayerLogOutTest
 {
 	[Fact]
@@ -58,6 +59,6 @@ public partial class GamePlayerLogOutTest
 
 		var sut = new GamePlayerLogOutClient(httpClient);
 
-		await sut.LogOutAsync( playerCode, gameProviderCode);
+		await sut.LogOutAsync(playerCode, gameProviderCode);
 	}
 }

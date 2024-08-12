@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry.Exporter;
 
 namespace Tgs.GamePlayerLogOut.IntegrationTest;
+
 internal class GamePlayerOnlineApplication(Action<IWebHostBuilder>? webHostConfigure = null) : WebApplicationFactory<Program>
 {
 	protected override void ConfigureWebHost(IWebHostBuilder builder)

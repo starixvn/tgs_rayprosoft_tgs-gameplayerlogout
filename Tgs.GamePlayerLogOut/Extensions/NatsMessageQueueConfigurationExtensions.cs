@@ -1,4 +1,4 @@
-using Tgs.GamePlayerLogOut.Core.Extensions;
+﻿using Tgs.GamePlayerLogOut.Core.Extensions;
 using Valhalla.MessageQueue.Nats.Configuration;
 
 namespace Tgs.GamePlayerLogOut.Extensions;
