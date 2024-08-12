@@ -2,7 +2,6 @@
 
 internal class GamePlayerLogOutClient(HttpClient httpClient) : IGamePlayerLogOutClient
 {
-
 	public async ValueTask LogOutAsync(string playerCode, CancellationToken cancellationToken = default)
 	{
 		var response = await httpClient
@@ -14,7 +13,7 @@ internal class GamePlayerLogOutClient(HttpClient httpClient) : IGamePlayerLogOut
 		_ = response.EnsureSuccessStatusCode();
 	}
 
-	public async ValueTask LogOutAsync(string playerCode,string gameProviderCode,	CancellationToken cancellationToken = default)
+	public async ValueTask LogOutAsync(string playerCode, string gameProviderCode, CancellationToken cancellationToken = default)
 	{
 		var response = await httpClient
 			.DeleteAsync(

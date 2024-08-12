@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
-using Tgs.GamePlayerLogOut.Protos;
 using Tgs.GamePlayerLogOut.Core.ApplicationServices;
+using Tgs.GamePlayerLogOut.Protos;
 using Tgs.GameProviders.Domains;
 using Tgs.ServiceUtility;
 using Valhalla.MessageQueue;
