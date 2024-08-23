@@ -7,6 +7,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Tgs.GamePlayerLogOut.Extensions;
 using Tgs.GamePlayerLogOut.MessageHandlers;
+using Tgs.GamePlayerLogOut.Middlewares;
 using Tgs.GameProviders.Domains;
 using Tgs.MessageQueue.Nats.Serializers;
 
@@ -14,6 +15,7 @@ var filterInstrumentations = new[] { "html", "ico", "png", "jpg" };
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseSentry();
 builder.Logging
 	.AddOpenTelemetry(options =>
 	{
@@ -147,10 +149,12 @@ builder.Services
 	.AddServiceUtiltiyInterceptors();
 
 builder.Services.AddHealthChecks();
+builder.Services.AddScoped<ExceptionMiddleware>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
